@@ -5,7 +5,7 @@
 
 <script src="jquery.js"></script>
 <script src="ktaneSolver.js"></script>
-<script src="modules.js"></script>
+<script src="ktaneModules.js"></script>
 <script>
     $.getMultiScripts = function(arr, path) {
         var _arr = $.map(arr, function(scr) {
@@ -22,12 +22,10 @@
     window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
     var finalTranscript = '';
     var finalTranscriptComplete = true;
-    var ktaneSolver = new KtaneSolver();
-    ktaneSolver.setCallback(()=>{
-        console.log("Ktane Solver is ready");
-        ktaneSpeak(`I am ready`);
-    });
-    ktaneSolver.init();
+    var ktaneSolver=()=>{};
+    $(document).ready(()=>{
+        ktaneSolver = new KtaneSolver();
+    })
     var recognition = new window.SpeechRecognition();
     recognition.interimResults = true;
     recognition.maxAlternatives = 10;

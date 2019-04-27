@@ -1,43 +1,45 @@
 function KtaneSolver() {
-    this.moduleList=theModuleList;
-    var scriptsLoaded=false;
-    var scriptsCallback=this.callback;
-    this.init=()=>{
-        var scripts=[];
-        for(var i=0;i<this.moduleList.modules.length;i++) {
-            scripts.push(this.moduleList.modules[i].script);
-        }
-        $.getMultiScripts(scripts,'modules/').done(function() {
-            scriptsLoaded=true;
-            scriptsCallback();
-        });
-    }
-    this.setCallback=(f)=>{
-        scriptsCallback=f;
-    };
+    this.moduleList=ktaneModuleCommandInterface;
+    this.bombinfo=new KtaneBombInfo();
     this.runCommand=(t)=>{
-        if(!scriptsLoaded){
-            console.error("KtaneSolver scripts are not loaded yet");
-        }
+        t=t.toLowerCase();
+        t=t.trim();
         var cmd="";
         var action=null;
-        for(var i=0;i<this.moduleList.modules.length;i++) {
-            for(var j=0;j<this.moduleList.modules[i].alias.length;j++) {
-                if(t.indexOf(this.moduleList.modules[i].alias[j])==0){
-                    cmd=this.moduleList.modules[i].alias[j];
-                    action=this.moduleList.modules[i].cmd;
+        for(var i=0;i<Object.keys(this.moduleList).length;i++) {
+            for(var j=0;j<this.moduleList[Object.keys(this.moduleList)[i]].alias.length;j++) {
+                console.log("Checking: "+this.moduleList[Object.keys(this.moduleList)[i]].alias[j]+" against: "+t);
+                if(t.indexOf(this.moduleList[Object.keys(this.moduleList)[i]].alias[j])==0){
+                    console.log("Running command for "+this.moduleList[Object.keys(this.moduleList)[i]].name);
+                    cmd=this.moduleList[Object.keys(this.moduleList)[i]].alias[j];
+                    action=this.moduleList[Object.keys(this.moduleList)[i]].script;
                     break;
                 }
             }
         }
-        if(cmd==""){ktanespeak(`Invalid command`);return;}
+        if(cmd==""){ktaneSpeak(`Invalid command`);return;}
         var s=t.split(cmd+" ");
         s.splice(0,1);
         var a=s.join("");
-        KtaneSolver.moduleCommandInterface.apply(action,a.split(" "));
+        action(this.bombinfo,a.split(" "));
     }
 }
-window.ktaneModuleCommandInterface={};
+function KtaneBombInfo() {
+    this.serialnumber="";
+    this.batteries={d:0,aa:0,aax3:0,aax4:0};
+    var indicators=[];
+    this.indicators={
+        exists:(t)=>{
+            return indicators.includes("*"+t)||indicators.includes(" "+t);
+        },
+        isLit:(t)=>{
+            return indicators.includes("*"+t)||indicators.includes(" "+t);
+        },
+        isUnlit:(t)=>{
+            return indicators.includes("*"+t)||indicators.includes(" "+t);
+        }
+    }
+}
 window.ktaneSpeak=(t)=>{
-
+    console.log(`Saying: ${t}`);
 }
