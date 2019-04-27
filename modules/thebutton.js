@@ -1,4 +1,4 @@
-//$$ {"name":"The Button","vanilla":true,"alias":["button"]} $$
+//$$ {"name":"The Button","vanilla":true,"alias":["button"],"help":"button <colour> <word>"} $$
 
 if (args.length !== 2) return;
 var colour = '',
