@@ -7,3 +7,4 @@ function KtaneSolver() {
     }
     this.callback=()=>{};
 }
+KtaneSolver.moduleCommandInterface={};
