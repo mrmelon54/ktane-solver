@@ -19,6 +19,7 @@
     recognition.interimResults = true;
     recognition.maxAlternatives = 10;
     recognition.continuous = true;
+    recognition.lang='en-US';
     recognition.onresult = (event) => {
         let interimTranscript = '';
         if (finalTranscriptComplete) finalTranscript = '';
