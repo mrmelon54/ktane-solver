@@ -6,6 +6,7 @@ for (var i = 0; i < args.length; i++) {
         colours.push(args[i])
     } else {
         ktaneSpeak(`Invalid colour`);
+        return;
     }
 }
 var convertor=null;
