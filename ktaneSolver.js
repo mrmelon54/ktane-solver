@@ -37,7 +37,7 @@ function KtaneSolver() {
         KtaneSolver.moduleCommandInterface.apply(action,a.split(" "));
     }
 }
-ktaneModuleCommandInterface={};
-ktaneSpeak=(t)=>{
+window.ktaneModuleCommandInterface={};
+window.ktaneSpeak=(t)=>{
 
 }
