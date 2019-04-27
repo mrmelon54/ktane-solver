@@ -6,6 +6,23 @@ function KtaneSolver() {
         t = t.trim();
         var cmd = "";
         var action = null;
+        if(t.indexOf("help")==0) {
+            var s=t.replace('help','').trim();
+            var helpText="";
+            var helpName="";
+            for (var i = 0; i < Object.keys(this.moduleList).length; i++) {
+                for (var j = 0; j < this.moduleList[Object.keys(this.moduleList)[i]].alias.length; j++) {
+                    if (s.indexOf(this.moduleList[Object.keys(this.moduleList)[i]].alias[j]) == 0) {
+                        helpText = this.moduleList[Object.keys(this.moduleList)[i]].help;
+                        helpName = this.moduleList[Object.keys(this.moduleList)[i]].names;
+                        break;
+                    }
+                }
+            }
+            ktaneSpeak(`Showing help text for ${helpName}`);
+            $("#output").html(helpText);
+            return;
+        }
         if (t.indexOf("batteries") == 0) {
             var s = /batteries (d|aa) ?(\d+)/.exec(t);
             try {
@@ -75,6 +92,7 @@ function KtaneSolver() {
             this.bombinfo.portplates.push(p);
             this.bombinfo.recalculatePorts();
             this.bombinfo.displayBombInfo();
+            return;
         } else if (t.indexOf("strike") == 0) {
             var s = t.replace('strike ', '');
             var a = parseInt(s);
@@ -83,6 +101,7 @@ function KtaneSolver() {
             } else {
                 ktaneSpeak("Error parsing number of strikes");
             }
+            return;
         }
         if (cmd == "") {
             for (var i = 0; i < Object.keys(this.moduleList).length; i++) {
