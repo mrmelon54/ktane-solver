@@ -7,34 +7,48 @@
 <script src="ktaneSolver.js"></script>
 <script src="modules.js"></script>
 <script>
+    $.getMultiScripts = function(arr, path) {
+        var _arr = $.map(arr, function(scr) {
+            return $.getScript((path || "") + scr);
+        });
+
+        _arr.push($.Deferred(function(deferred) {
+            $(deferred.resolve);
+        }));
+
+        return $.when.apply($, _arr);
+    }
+
     window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
     var finalTranscript = '';
-    var finalTranscriptComplete=true;
-    var ktaneSolver=new KtaneSolver();
-    ktaneSolver.init(()=>{
-        console.log("KTaNE Solver ready");
+    var finalTranscriptComplete = true;
+    var ktaneSolver = new KtaneSolver();
+    ktaneSolver.setCallback(()=>{
+        console.log("Ktane Solver is ready");
+        KtaneSolver.speak(`I am ready`);
     });
+    ktaneSolver.init();
     var recognition = new window.SpeechRecognition();
     recognition.interimResults = true;
     recognition.maxAlternatives = 10;
     recognition.continuous = true;
     recognition.onresult = (event) => {
         let interimTranscript = '';
-        if(finalTranscriptComplete)finalTranscript='';
-        finalTranscriptComplete=false;
+        if (finalTranscriptComplete) finalTranscript = '';
+        finalTranscriptComplete = false;
         for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
             let transcript = event.results[i][0].transcript;
             if (event.results[i].isFinal) {
                 finalTranscript += transcript;
-                finalTranscriptComplete=true;
+                finalTranscriptComplete = true;
                 ktaneSolver.runCommand(finalTranscript);
             } else {
                 interimTranscript += transcript;
             }
         }
-        $("#speech-line").html(finalTranscriptComplete?finalTranscript:'<i style="color:#ddd;">'+finalTranscript+'</i>');
+        $("#speech-line").html(finalTranscriptComplete ? finalTranscript : '<i style="color:#ddd;">' + finalTranscript + '</i>');
     }
-    $("#start-record-button").click(()=>{
+    $("#start-record-button").click(() => {
         recognition.start();
     });
 </script>

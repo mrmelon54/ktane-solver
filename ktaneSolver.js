@@ -1,12 +1,24 @@
 function KtaneSolver() {
     this.moduleList=theModuleList;
+    var scriptsLoaded=false;
+    var scriptsCallback=this.callback;
     this.init=()=>{
+        var scripts=[];
         for(var i=0;i<this.moduleList.modules.length;i++) {
-            $.getScript("modules/"+this.moduleList.modules[i].script);
+            scripts.push(this.moduleList.modules[i].script);
         }
+        $.getMultiScripts(scripts,'modules/').done(function() {
+            scriptsLoaded=true;
+            scriptsCallback();
+        });
     }
-    this.callback=()=>{};
+    this.setCallback=(f)=>{
+        scriptsCallback=f;
+    };
     this.runCommand=(t)=>{
+        if(!scriptsLoaded){
+            console.error("KtaneSolver scripts are not loaded yet");
+        }
         var cmd="";
         var action=null;
         for(var i=0;i<this.moduleList.modules.length;i++) {
