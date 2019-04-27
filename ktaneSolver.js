@@ -21,12 +21,12 @@ function KtaneSolver() {
             return;
         } else if (t.indexOf("lit indicator") == 0) {
             var s = t.split(" ");
-            this.bombinfo.indicatorList.push("*" + this.toLetter(s[2]) + this.toLetter(s[3]) + this.toLetter(s[4]));
+            this.bombinfo.indicatorList.push(("*" + this.toLetter(s[2]) + this.toLetter(s[3]) + this.toLetter(s[4])).toLowerCase());
             this.bombinfo.displayBombInfo();
             return;
         } else if (t.indexOf("unlit indicator") == 0) {
             var s = t.split(" ");
-            this.bombinfo.indicatorList.push(" " + this.toLetter(s[2]) + this.toLetter(s[3]) + this.toLetter(s[4]));
+            this.bombinfo.indicatorList.push((" " + this.toLetter(s[2]) + this.toLetter(s[3]) + this.toLetter(s[4])).toLowerCase());
             this.bombinfo.displayBombInfo();
             return;
         } else if (t.indexOf("remove indicator") == 0) {
@@ -36,23 +36,24 @@ function KtaneSolver() {
             return;
         } else if (t.indexOf("serial number") == 0) {
             var s = t.split(" ");
-            s.shift();s.shift();
+            s.shift();
+            s.shift();
             this.bombinfo.serialnumber = {
                 whole: "",
                 letters: [],
                 numbers: []
             };
-            for(var i=0;i<s.length;i++) {
-                if(["serial","number"].includes(s[i]))continue;
-                if(this.toLetter(s[i])!==null){
-                    this.bombinfo.serialnumber.whole+=this.toLetter(s[i]);
+            for (var i = 0; i < s.length; i++) {
+                if (["serial", "number"].includes(s[i])) continue;
+                if (this.toLetter(s[i]) !== null) {
+                    this.bombinfo.serialnumber.whole += this.toLetter(s[i]);
                 } else {
-                    this.bombinfo.serialnumber.whole+=s[i];
+                    this.bombinfo.serialnumber.whole += s[i];
                 }
             }
-            this.bombinfo.serialnumber.whole=this.bombinfo.serialnumber.whole.toUpperCase();
-            this.bombinfo.serialnumber.letters=this.bombinfo.serialnumber.whole.replace(/[^A-Z]/g, "").split("");
-            this.bombinfo.serialnumber.numbers=this.bombinfo.serialnumber.whole.replace(/[^\d]/g, "").split("").map(d=>parseInt(d));
+            this.bombinfo.serialnumber.whole = this.bombinfo.serialnumber.whole.toUpperCase();
+            this.bombinfo.serialnumber.letters = this.bombinfo.serialnumber.whole.replace(/[^A-Z]/g, "").split("");
+            this.bombinfo.serialnumber.numbers = this.bombinfo.serialnumber.whole.replace(/[^\d]/g, "").split("").map(d => parseInt(d));
             this.bombinfo.displayBombInfo();
             return;
         } else if (t.indexOf("port") == 0) {
@@ -74,6 +75,14 @@ function KtaneSolver() {
             this.bombinfo.portplates.push(p);
             this.bombinfo.recalculatePorts();
             this.bombinfo.displayBombInfo();
+        } else if (t.indexOf("strike") == 0) {
+            var s = t.replace('strike ', '');
+            var a = parseInt(s);
+            if (!isNaN(a)) {
+                this.bombinfo.strikes = a;
+            } else {
+                ktaneSpeak("Error parsing number of strikes");
+            }
         }
         if (cmd == "") {
             for (var i = 0; i < Object.keys(this.moduleList).length; i++) {
@@ -96,13 +105,14 @@ function KtaneSolver() {
         action(this.bombinfo, a.split(" "));
     }
     this.toLetter = (t) => {
-        t = t.replace('ciara', 'sierra').replace('xray','x-ray');
-        if(!"alpha;bravo;charlie;delta;echo;foxtrot;golf;hotel;india;juliet;kilo;lima;mike;november;oscar;papa;quebec;romeo;sierra;tango;uniform;victor;whiskey;x-ray;yankee;zulu".split(';').includes(t))return null;
+        t = t.replace('ciara', 'sierra').replace('xray', 'x-ray');
+        if (!"alpha;bravo;charlie;delta;echo;foxtrot;golf;hotel;india;juliet;kilo;lima;mike;november;oscar;papa;quebec;romeo;sierra;tango;uniform;victor;whiskey;x-ray;yankee;zulu".split(';').includes(t)) return null;
         return t[0];
     }
 }
 
 function KtaneBombInfo() {
+    this.strikes=0;
     this.serialnumber = {
         whole: "",
         letters: [],
@@ -115,12 +125,15 @@ function KtaneBombInfo() {
     this.indicatorList = [];
     this.indicators = {
         exists: (t) => {
+            t=t.toLowerCase()
             return this.indicators.isLit(t) || this.indicators.isUnlit(t);
         },
         isLit: (t) => {
+            t=t.toLowerCase()
             return this.indicatorList.includes("*" + t);
         },
         isUnlit: (t) => {
+            t=t.toLowerCase()
             return this.indicatorList.includes(" " + t);
         }
     }
@@ -157,7 +170,7 @@ function KtaneBombInfo() {
         for (var i = 0; i < this.indicatorList.length; i++) {
             if (this.indicatorList[i].indexOf('*') == 0) {
                 indicatorsHTML += '<li>Lit ' + this.indicatorList[i].substr(1, 3) + '</li>';
-            } else if(this.indicatorList[i].indexOf(' ')==0) {
+            } else if (this.indicatorList[i].indexOf(' ') == 0) {
                 indicatorsHTML += '<li>Unlit ' + this.indicatorList[i].substr(1, 3) + '</li>';
             }
         }
@@ -176,7 +189,8 @@ function KtaneBombInfo() {
         <div>D Batteries: ${this.batteries.d}</div>
         <div>AA Batteries: ${this.batteries.aa}</div>
         <div>Indicators: ${indicatorsHTML}</div>
-        <div>Portplates: ${portplatesHTML}</div>`);
+        <div>Portplates: ${portplatesHTML}</div>
+        <div>Strikes: ${this.strikes}</div>`);
     }
 }
 window.ktaneSpeak = (t) => {
