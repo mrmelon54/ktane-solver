@@ -124,10 +124,13 @@ function KtaneSolver() {
         action(this.bombinfo, a.split(" "));
     }
     this.toLetter = (t) => {
-        t = t.replace('ciara', 'sierra').replace('xray', 'x-ray');
-        if (!"alpha;bravo;charlie;delta;echo;foxtrot;golf;hotel;india;juliet;kilo;lima;mike;november;oscar;papa;quebec;romeo;sierra;tango;uniform;victor;whiskey;x-ray;yankee;zulu".split(';').includes(t)) return null;
-        return t[0];
+        return ktaneNatoToLetter(t);
     }
+}
+function ktaneNatoToLetter(t) {
+    t = t.replace('ciara', 'sierra').replace('xray', 'x-ray');
+    if (!"alpha;bravo;charlie;delta;echo;foxtrot;golf;hotel;india;juliet;kilo;lima;mike;november;oscar;papa;quebec;romeo;sierra;tango;uniform;victor;whiskey;x-ray;yankee;zulu".split(';').includes(t)) return null;
+    return t[0];
 }
 
 function KtaneBombInfo() {
