@@ -42,6 +42,12 @@ bombinfo.portplates // returns an array of portplates
 bombinfo.ports.<port name> // returns an integer of the number of ports
 ```
 
+### Other useful functions
+
+```
+ktaneNatoToLetter( <text> ); // returns the letter or null if it is an invalid word
+```
+
 ### Speaking
 
 Used to make the bot speak to the user.
