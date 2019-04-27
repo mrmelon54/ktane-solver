@@ -1,11 +1,13 @@
 # KTaNE Solver docs
 
+Here is some documentation on how to create modules for KTaNE Solver. If you need any help just ask on the discord server.
+
 ### Module Info
 
 A simple JSON string surrounded by `//$$` and `$$` to give some information about the module.
 
 ```
-//$$ {"name":" <module name> ","alias":[ <array of command names> ]} $$
+//$$ {"name":" <module name> ","alias":[ <array of command names> ],"help": <a description of the command> } $$
 ```
 
 ### Arugments
