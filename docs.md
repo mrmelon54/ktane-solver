@@ -62,10 +62,10 @@ Currently non-existent
 
 ### Rebuilding
 
-Run the python file to rebuild the compressed version of all the modules stored in `ktaneModules.js`
-This requires python and the requests library installed.
-Install python from [here](https://www.python.org/downloads/)
-Run this in command line window to install requests.
+Run the python file to rebuild the compressed version of all the modules stored in `ktaneModules.js`.<br>
+This requires python and the requests library installed.<br>
+Install python from [here](https://www.python.org/downloads/).<br>
+Run this in command line window to install requests.<br>
 ```
 python -m pip install requests
 ```
