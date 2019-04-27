@@ -1,14 +1,17 @@
 import glob, requests, json
 g=glob.glob("modules/*.js")
 o="var ktaneModuleCommandInterface={"
+print("Building Modules:")
 for item in g:
     f=open(item,'r')
     c=f.read()
-    theitem=json.loads(c.split('$$')[1])
-    theitem['script']="%%$$%%"
-    o+='"'+item.replace('modules\\','').replace('modules/','').replace('.js','')+'":'
-    o+=json.dumps(theitem).replace('"%%$$%%"','(bombinfo,args)=>{'+c+'}')
-    o+=','
+    if not "//**no add**" in c:
+        theitem=json.loads(c.split('$$')[1])
+        theitem['script']="%%$$%%"
+        print("  - "+theitem['name'])
+        o+='"'+item.replace('modules\\','').replace('modules/','').replace('.js','')+'":'
+        o+=json.dumps(theitem).replace('"%%$$%%"','(bombinfo,args)=>{'+c+'}')
+        o+=','
     f.close()
 o+='thisIsTheLastItemAndItIsNotActuallyNeededButIPutItHereAsAJoke:{"name":"","alias":[],"script":()=>{}}};'
 url = 'https://javascript-minifier.com/raw'
