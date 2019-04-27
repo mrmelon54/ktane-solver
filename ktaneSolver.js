@@ -72,9 +72,8 @@ function KtaneSolver() {
         action(this.bombinfo, a.split(" "));
     }
     this.toLetter=(t)=>{
-        t=t.replace('oskar','oscar').replace('ciara','sierra').replace('x-ray','xray');
-        return {"alpha":"a","bravo":"b","charlie":"c","delta":"d","echo":"e","foxtrot":"f","golf":"g","hotel":"h","india":"i","juliet":"j","kilo":"k","lima":"l","mike":"m","november":"n",
-                "oscar":"o","papa":"p","quebec":"q","romeo":"r","sierra":"s","tango":"t","uniform":"u","victor":"v","whiskey":"w","xray":"x","yankee":"y","zulu":"z"}[t];
+        t=t.replace('ciara','sierra');
+        return t[0];
     }
 }
 
@@ -113,6 +112,9 @@ function KtaneBombInfo() {
             if(this.portplates.serial)count.serial++;
         }
         this.ports=count;
+    }
+    this.displayBombInfo=()=>{
+        $("#bombinfo").html(`<div>Serial Number: </div>`);
     }
 }
 window.ktaneSpeak = (t) => {
