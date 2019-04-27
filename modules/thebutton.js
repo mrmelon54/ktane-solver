@@ -1,4 +1,4 @@
-KtaneSolver.moduleCommandInterface.theButton=(bombinfo,args)=>{
+ktaneModuleCommandInterface.theButton=(bombinfo,args)=>{
     if(args.length!==2)return;
     var colour='',word='';
     for(var i=0;i<args.length;i++) {
@@ -10,7 +10,7 @@ KtaneSolver.moduleCommandInterface.theButton=(bombinfo,args)=>{
         var t='one';
         if(colour=='blue')t='four';
         else if(colour=='yellow')t='five';
-        ktaneSolver.speak(`Release on a ${t}`);
+        ktaneSpeak(`Release on a ${t}`);
         return;
     }
     if(word==="")return;
@@ -23,5 +23,5 @@ KtaneSolver.moduleCommandInterface.theButton=(bombinfo,args)=>{
     else if(colour=='yellow')a='hold';
     else if(colour=='red'&&word='hold')a='press';
     else a='hold';
-    ktaneSolver.speak(`${a=='hold'?'Hold':'Press'} the button`);
+    ktaneSpeak(`${a=='hold'?'Hold':'Press'} the button`);
 }

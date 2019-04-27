@@ -30,14 +30,14 @@ function KtaneSolver() {
                 }
             }
         }
-        if(cmd==""){KtaneSolver.speak(`Invalid command`);return;}
+        if(cmd==""){ktanespeak(`Invalid command`);return;}
         var s=t.split(cmd+" ");
         s.splice(0,1);
         var a=s.join("");
         KtaneSolver.moduleCommandInterface.apply(action,a.split(" "));
     }
 }
-KtaneSolver.moduleCommandInterface=()=>{};
-KtaneSolver.speak=(t)=>{
+ktaneModuleCommandInterface={};
+ktaneSpeak=(t)=>{
 
 }
