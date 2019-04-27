@@ -51,8 +51,8 @@ function KtaneSolver() {
                 }
             }
             this.bombinfo.serialnumber.whole=this.bombinfo.serialnumber.whole.toUpperCase();
-            this.bombinfo.serialnumber.letters=this.bombinfo.serialnumber.whole.replace(/[^\d]/g, "").split("");
-            this.bombinfo.serialnumber.numbers=this.bombinfo.serialnumber.whole.replace(/[^[A-Z]]/g, "").split("").map(d=>parseInt(d));
+            this.bombinfo.serialnumber.letters=this.bombinfo.serialnumber.whole.replace(/[^A-Z]/g, "").split("");
+            this.bombinfo.serialnumber.numbers=this.bombinfo.serialnumber.whole.replace(/[^\d]/g, "").split("").map(d=>parseInt(d));
             this.bombinfo.displayBombInfo();
             return;
         } else if (t.indexOf("port") == 0) {
