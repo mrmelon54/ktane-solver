@@ -1,7 +1,9 @@
 <div><button id="start-record-button" style="width:50px;height:50px;">Listen</button></div>
+<div id="speech-line"></div>
 <div id="display"></div>
 
 
+<script src="jquery.js"></script>
 <script src="ktaneSolver.js"></script>
 <script src="modules.js"></script>
 <script>
@@ -9,16 +11,19 @@
     var finalTranscript = '';
     var finalTranscriptComplete=true;
     var ktaneSolver=new KtaneSolver();
+    ktaneSolver.init(()=>{
+        console.log("KTaNE Solver ready");
+    });
     var recognition = new window.SpeechRecognition();
     recognition.interimResults = true;
     recognition.maxAlternatives = 10;
     recognition.continuous = true;
     recognition.onresult = (event) => {
-        var interimTranscript = '';
+        let interimTranscript = '';
         if(finalTranscriptComplete)finalTranscript='';
         finalTranscriptComplete=false;
         for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
-            var transcript = event.results[i][0].transcript;
+            let transcript = event.results[i][0].transcript;
             if (event.results[i].isFinal) {
                 finalTranscript += transcript;
                 finalTranscriptComplete=true;
@@ -27,9 +32,9 @@
                 interimTranscript += transcript;
             }
         }
-        document.querySelector('#display').innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</>';
+        $("#speech-line").html(finalTranscriptComplete?finalTranscript:'<i style="color:#ddd;">'+finalTranscript+'</i>');
     }
-    document.getElementById("start-record-button").addEventListener('click',()=>{
+    $("#start-record-button").click(()=>{
         recognition.start();
-    },false);
+    });
 </script>
