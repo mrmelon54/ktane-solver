@@ -1,0 +1,33 @@
+<script src="ktaneSolver.js"></script>
+<script src="modules.js"></script>
+<script>
+    window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+    var finalTranscript = '';
+    var finalTranscriptComplete=true;
+    var ktaneSolver=new KtaneSolver();
+    var recognition = new window.SpeechRecognition();
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 10;
+    recognition.continuous = true;
+    recognition.onresult = (event) => {
+        var interimTranscript = '';
+        if(finalTranscriptComplete)finalTranscript='';
+        finalTranscriptComplete=false;
+        for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
+            var transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+                finalTranscript += transcript;
+                finalTranscriptComplete=true;
+                ktaneSolver.runCommand(finalTranscript);
+            } else {
+                interimTranscript += transcript;
+            }
+        }
+        document.querySelector('#display').innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</>';
+    }
+    document.getElementById("start-record-button").addEventListener('click',()=>{
+        recognition.start();
+    },false);
+</script>
+<div><button id="start-record-button" style="width:50px;height:50px;">Listen</button></div>
+<div id="display"></div>
