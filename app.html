@@ -8,18 +8,6 @@
 <script src="ktaneSolver.js"></script>
 <script src="ktaneModules.js"></script>
 <script>
-    $.getMultiScripts = function(arr, path) {
-        var _arr = $.map(arr, function(scr) {
-            return $.getScript((path || "") + scr);
-        });
-
-        _arr.push($.Deferred(function(deferred) {
-            $(deferred.resolve);
-        }));
-
-        return $.when.apply($, _arr);
-    }
-
     window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
     var finalTranscript = '';
     var finalTranscriptComplete = true;
