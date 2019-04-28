@@ -26,12 +26,14 @@ function KtaneSolver() {
             return;
         }
         if (t.indexOf("batteries") == 0) {
-            var s = /batteries (d|aa) ?(\d+)/.exec(t);
+            var s = /batteries (d|aa|holders) ?(\d+)/.exec(t);
             try {
                 if (s[1] == "d") {
                     this.bombinfo.batteries.d = parseInt(s[2]);
                 } else if (s[1] == "aa") {
                     this.bombinfo.batteries.aa = parseInt(s[2]);
+                } else if (s[1] == "holders") {
+                    this.bombinfo.batteries.holders = parseInt(s[2]);
                 }
             } catch (e) {
                 ktaneSpeak("Invalid number of batteries");
@@ -87,7 +89,7 @@ function KtaneSolver() {
                 serial: false
             };
             if (s.includes("parallel")) p.parallel = true;
-            if (s.includes("dvid")) p.dvid = true;
+            if (s.includes("dvid") || s.includes("dvi-d")) p.dvid = true;
             if (s.includes("stereo")) p.stereo = true;
             if (s.includes("ps2")) p.ps2 = true;
             if (s.includes("rj45")) p.rj45 = true;
@@ -98,8 +100,9 @@ function KtaneSolver() {
             return;
         } else if (t.indexOf("remove port") == 0) {
             if (this.bombinfo.portplates.length == 0) return;
-            this.bombinfo.portplates splice(this.bombinfo.portplates.length - 1, 1);
+            this.bombinfo.portplates.splice(this.bombinfo.portplates.length - 1, 1);
             this.bombinfo.displayBombInfo();
+            return;
         } else if (t.indexOf("strike") == 0) {
             var s = t.replace('strike ', '');
             var a = parseInt(s);
@@ -185,6 +188,7 @@ function KtaneBombInfo() {
     this.batteries = {
         d: 0,
         aa: 0,
+        holders: 0,
         all: 0
     };
     this.indicatorList = [];
@@ -209,7 +213,8 @@ function KtaneBombInfo() {
         stereorca: 0,
         ps2: 0,
         rj45: 0,
-        serial: 0
+        serial: 0,
+        all: 0
     };
     this.recalculatePorts = () => {
         var count = {
@@ -218,15 +223,34 @@ function KtaneBombInfo() {
             stereorca: 0,
             ps2: 0,
             rj45: 0,
-            serial: 0
+            serial: 0,
+            all: 0
         };
         for (var i = 0; i < this.portplates.length; i++) {
-            if (this.portplates.parallel) count.parallel++;
-            if (this.portplates.dvid) count.dvid++;
-            if (this.portplates.stereorca) count.stereorca++;
-            if (this.portplates.ps2) count.ps2++;
-            if (this.portplates.rj45) count.rj45++;
-            if (this.portplates.serial) count.serial++;
+            if (this.portplates.parallel) {
+                count.parallel++;
+                count.all++;
+            };
+            if (this.portplates.dvid) {
+                count.dvid++;
+                count.all++;
+            };
+            if (this.portplates.stereorca) {
+                count.stereorca++;
+                count.all++;
+            };
+            if (this.portplates.ps2) {
+                count.ps2++;
+                count.all++;
+            };
+            if (this.portplates.rj45) {
+                count.rj45++;
+                count.all++;
+            };
+            if (this.portplates.serial) {
+                count.serial++;
+                count.all++;
+            };
         }
         this.ports = count;
     }
@@ -247,39 +271,47 @@ function KtaneBombInfo() {
         for (var i = 0; i < this.portplates.length; i++) {
             var a = this.portplates[i];
             var p = [];
-            p.push(a.parallel ? "Parallel" : "");
-            p.push(a.dvid ? "DVI-D" : "");
-            p.push(a.rj45 ? "RJ-45" : "");
-            p.push(a.ps2 ? "PS/2" : "");
-            p.push(a.stereorca ? "Stereo RCA" : "");
-            p.push(a.serial ? "Serial" : "");
+            if (a.parallel) p.push("Parallel");
+            if (a.dvid) p.push("DVI-D");
+            if (a.stereorca) p.push("Stereo RCA");
+            if (a.ps2) p.push("PS/2");
+            if (a.rj45) p.push("RJ-45");
+            if (a.serial) p.push("Serial");
             portplatesHTML += '<li>' + p.join(", ") + '</li>';
-            portplatesHTML += '</ul>';
-            var portsCountHTML = '<ul>';
-            portsCountHTML += '<li>Parallel: ' + this.ports.parallel + '</li>';
-            portsCountHTML += '<li>DVI-D: ' + this.ports.dvid + '</li>';
-            portsCountHTML += '<li>Stereo RCA: ' + this.ports.stereorca + '</li>';
-            portsCountHTML += '<li>PS/2: ' + this.ports.ps2 + '</li>';
-            portsCountHTML += '<li>RJ-45: ' + this.ports.rj45 + '</li>';
-            portsCountHTML += '<li>Serial: ' + this.ports.serial + '</li>';
-            portsCountHTML += '</ul>';
-            $("#bombinfo").html(`<div>Serial Number: ${this.serialnumber.whole}</div>
+        }
+        portplatesHTML += '</ul>';
+        var portsCountHTML = '<ul>';
+        portsCountHTML += '<li>Parallel: ' + this.ports.parallel + '</li>';
+        portsCountHTML += '<li>DVI-D: ' + this.ports.dvid + '</li>';
+        portsCountHTML += '<li>Stereo RCA: ' + this.ports.stereorca + '</li>';
+        portsCountHTML += '<li>PS/2: ' + this.ports.ps2 + '</li>';
+        portsCountHTML += '<li>RJ-45: ' + this.ports.rj45 + '</li>';
+        portsCountHTML += '<li>Serial: ' + this.ports.serial + '</li>';
+        portsCountHTML += '<li>Total: ' + this.ports.all + '</li>';
+        portsCountHTML += '</ul>';
+        $("#bombinfo").html(`<div>Serial Number: ${this.serialnumber.whole}</div>
         <div>Serial Number Letters: ${this.serialnumber.letters}</div>
         <div>Serial Number Numbers: ${this.serialnumber.numbers}</div>
-        <div>D Batteries: ${this.batteries.d}</div>
-        <div>AA Batteries: ${this.batteries.aa}</div>
+        <div>Batteries:
+            <ul>
+                <li>D: ${this.batteries.d}</li>
+                <li>AA: ${this.batteries.aa}</li>
+                <li>Holders: ${this.batteries.holders}</li>
+                <li>Total: ${this.batteries.all}</li>
+            </ul>
+        </div>
         <div>Indicators: ${indicatorsHTML}</div>
         <div>Portplates: ${portplatesHTML}</div>
         <div>Ports Count: ${portsCountHTML}</div>
         <div>Strikes: ${this.strikes}</div>`);
-        }
     }
-    window.ktaneSpeak = (t) => {
-        console.log(`Saying: ${t}`);
-        var msg = new SpeechSynthesisUtterance();
-        var voices = window.speechSynthesis.getVoices();
-        msg.voice = voices[2];
-        msg.lang = "en-US";
-        msg.text = t;
-        speechSynthesis.speak(msg);
-    }
+}
+window.ktaneSpeak = (t) => {
+    console.log(`Saying: ${t}`);
+    var msg = new SpeechSynthesisUtterance();
+    var voices = window.speechSynthesis.getVoices();
+    msg.voice = voices[2];
+    msg.lang = "en-US";
+    msg.text = t;
+    speechSynthesis.speak(msg);
+}

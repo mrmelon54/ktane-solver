@@ -29,8 +29,10 @@ bombinfo.serialnumber.numbers // e.g. [1,2,8] <-- The numbers are returned as in
 bombinfo.strikes // returns an integer
 
 // Batteries
-bombinfo.batteries.d  // returns an integer
-bombinfo.batteries.aa  // returns an integer
+bombinfo.batteries.<battery name>  // returns an integer
+bombinfo.batteries.holders // returns an integer
+bombinfo.batteries.all // returns an integer
+// valid battery names are "aa" and "d"
 
 // Indicators
 bombinfo.indicators.exists( <name> ); // returns boolean equivalent to is lit or unlit
@@ -40,6 +42,8 @@ bombinfo.indicators.isUnlit( <name> ); // returns boolean
 // Ports
 bombinfo.portplates // returns an array of portplates
 bombinfo.ports.<port name> // returns an integer of the number of ports
+bombinfo.ports.all // returns an integer
+// valid port names are "parallel", "dvid", "stereorca", "ps2", "rj45" and "serial"
 ```
 
 __**Portplates List**__
