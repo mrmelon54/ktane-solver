@@ -19,7 +19,7 @@ port <port names (parallel/dvid/rj45/ps2/stereo/serial)>
 remove port
 ```
 
-### Help Commands
+### Help Command
 ```
 help <module alias>
 ```
