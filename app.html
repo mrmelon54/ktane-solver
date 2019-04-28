@@ -37,6 +37,6 @@
         $("#speech-line").html(finalTranscriptComplete ? finalTranscript : '<i style="color:#ddd;">' + finalTranscript + '</i>');
     }
     $("#start-record-button").click(() => {
-        recognition.start();
+        try{recognition.start();}catch(e){}
     });
 </script>
