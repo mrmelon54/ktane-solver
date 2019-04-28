@@ -25,8 +25,8 @@ function KtaneSolver() {
             $("#output").html(helpText);
             return;
         }
-        if (t.indexOf("batteries") == 0) {
-            var s = /batteries (d|aa|holders) ?(\d+)/.exec(t);
+        if (t.indexOf("batteries") == 0||t.indexOf("battery")==0) {
+            var s = /[batteries|battery] (d|aa|holders) ?(\d+)/.exec(t);
             try {
                 if (s[1] == "d") {
                     this.bombinfo.batteries.d = parseInt(s[2]);
@@ -43,12 +43,30 @@ function KtaneSolver() {
             return;
         } else if (t.indexOf("lit indicator") == 0) {
             var s = t.split(" ");
-            this.bombinfo.indicatorList.push(("*" + this.toLetter(s[2]) + this.toLetter(s[3]) + this.toLetter(s[4])).toLowerCase());
+            var a="";
+            for (var i = 0; i < s.length; i++) {
+                if (["lit", "indicator"].includes(s[i])) continue;
+                if (this.toLetter(s[i]) !== null) {
+                    a += this.toLetter(s[i]);
+                } else {
+                    a += s[i];
+                }
+            }
+            this.bombinfo.indicatorList.push(("*" + a).toLowerCase());
             this.bombinfo.displayBombInfo();
             return;
         } else if (t.indexOf("unlit indicator") == 0) {
             var s = t.split(" ");
-            this.bombinfo.indicatorList.push((" " + this.toLetter(s[2]) + this.toLetter(s[3]) + this.toLetter(s[4])).toLowerCase());
+            var a="";
+            for (var i = 0; i < s.length; i++) {
+                if (["unlit", "indicator"].includes(s[i])) continue;
+                if (this.toLetter(s[i]) !== null) {
+                    a += this.toLetter(s[i]);
+                } else {
+                    a += s[i];
+                }
+            }
+            this.bombinfo.indicatorList.push((" " + a).toLowerCase());
             this.bombinfo.displayBombInfo();
             return;
         } else if (t.indexOf("remove indicator") == 0) {
@@ -90,7 +108,7 @@ function KtaneSolver() {
             };
             if (s.includes("parallel")) p.parallel = true;
             if (s.includes("dvid") || s.includes("dvi-d")) p.dvid = true;
-            if (s.includes("stereo")) p.stereo = true;
+            if (s.includes("stereo")) p.stereorca = true;
             if (s.includes("ps2")) p.ps2 = true;
             if (s.includes("rj45")) p.rj45 = true;
             if (s.includes("serial") || s.includes("cereal")) p.serial = true;
@@ -241,27 +259,27 @@ function KtaneBombInfo() {
             all: 0
         };
         for (var i = 0; i < this.portplates.length; i++) {
-            if (this.portplates.parallel) {
+            if (this.portplates[i].parallel) {
                 count.parallel++;
                 count.all++;
             };
-            if (this.portplates.dvid) {
+            if (this.portplates[i].dvid) {
                 count.dvid++;
                 count.all++;
             };
-            if (this.portplates.stereorca) {
+            if (this.portplates[i].stereorca) {
                 count.stereorca++;
                 count.all++;
             };
-            if (this.portplates.ps2) {
+            if (this.portplates[i].ps2) {
                 count.ps2++;
                 count.all++;
             };
-            if (this.portplates.rj45) {
+            if (this.portplates[i].rj45) {
                 count.rj45++;
                 count.all++;
             };
-            if (this.portplates.serial) {
+            if (this.portplates[i].serial) {
                 count.serial++;
                 count.all++;
             };
