@@ -1,4 +1,6 @@
-<div><button id="start-record-button" style="width:50px;height:50px;">Listen</button></div>
+<div>
+<button id="start-record-button" style="width:50px;height:50px;">Listen</button>
+</div>
 <div id="speech-line"></div>
 <div id="bombinfo"></div>
 <div id="display"></div>
@@ -10,6 +12,8 @@
 <script>
     window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
     var finalTranscript = '';
+    var autoRestart=false;
+    var lastStartedAt=new Date().getTime();
     var finalTranscriptComplete = true;
     var ktaneSolver=()=>{};
     $(document).ready(()=>{
@@ -36,6 +40,18 @@
         }
         $("#speech-line").html(finalTranscriptComplete ? finalTranscript : '<i style="color:#ddd;">' + finalTranscript + '</i>');
     }
+recognition.onend = function() {
+   if (autoRestart) {
+ var timeSinceLastStart = new Date().getTime() - lastStartedAt;
+ if (timeSinceLastStart < 1000) { 
+setTimeout(function() { 
+recognition.start(); 
+}, 1000 - timeSinceLastStart); 
+} else {
+ recognition.start();
+ } 
+} 
+};
     $("#start-record-button").click(() => {
         try{recognition.start();}catch(e){}
     });
