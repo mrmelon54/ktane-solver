@@ -1,9 +1,9 @@
 <div>
 <button id="start-record-button" style="width:50px;height:50px;">Listen</button>
 </div>
-<div id="speech-line"></div>
-<div id="bombinfo"></div>
-<div id="display"></div>
+<div id="speech-line" style="position:fixed;top:8px;left:70px;"></div>
+<div id="bombinfo" style="width:260px;margin-top:8px;"></div>
+<div id="display" style="position: fixed;top: 28px;left: 260px;width: calc(100vw - 268px);height: calc(100vh - 36px);"></div>
 
 
 <script src="jquery.js"></script>
@@ -43,14 +43,14 @@
 recognition.onend = function() {
    if (autoRestart) {
  var timeSinceLastStart = new Date().getTime() - lastStartedAt;
- if (timeSinceLastStart < 1000) { 
-setTimeout(function() { 
-recognition.start(); 
-}, 1000 - timeSinceLastStart); 
+ if (timeSinceLastStart < 1000) {
+setTimeout(function() {
+recognition.start();
+}, 1000 - timeSinceLastStart);
 } else {
  recognition.start();
- } 
-} 
+ }
+}
 };
     $("#start-record-button").click(() => {
         try{recognition.start();}catch(e){}
