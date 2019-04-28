@@ -93,6 +93,10 @@ function KtaneSolver() {
             this.bombinfo.recalculatePorts();
             this.bombinfo.displayBombInfo();
             return;
+        } else if(t.indexOf("remove port")==0){
+            if(this.bombinfo.portplates.length==0)return;
+            this.bombinfo.portplates splice(this.bombinfo.portplates.length-1,1);
+            this.bombinfo.displayBombInfo();
         } else if (t.indexOf("strike") == 0) {
             var s = t.replace('strike ', '');
             var a = parseInt(s);
