@@ -1,6 +1,7 @@
 function KtaneSolver() {
     this.moduleList = ktaneModuleCommandInterface;
     this.bombinfo = new KtaneBombInfo();
+    this.bombinfo.displayBombInfo();
     this.runCommand = (t) => {
         t = t.toLowerCase();
         t = t.trim();
@@ -93,6 +94,10 @@ function KtaneSolver() {
             this.bombinfo.recalculatePorts();
             this.bombinfo.displayBombInfo();
             return;
+        } else if(t.indexOf("remove port")==0){
+            if(this.bombinfo.portplates.length==0)return;
+            this.bombinfo.portplates splice(this.bombinfo.portplates.length-1,1);
+            this.bombinfo.displayBombInfo();
         } else if (t.indexOf("strike") == 0) {
             var s = t.replace('strike ', '');
             var a = parseInt(s);
@@ -231,14 +236,26 @@ function KtaneBombInfo() {
             }
         }
         indicatorsHTML += '</ul>';
-        var portplatesHTML = '<ul>';
-        portplatesHTML += '<li>Parallel: ' + this.ports.parallel + '</li>';
-        portplatesHTML += '<li>DVI-D: ' + this.ports.dvid + '</li>';
-        portplatesHTML += '<li>Stereo RCA: ' + this.ports.stereorca + '</li>';
-        portplatesHTML += '<li>PS/2: ' + this.ports.ps2 + '</li>';
-        portplatesHTML += '<li>RJ-45: ' + this.ports.rj45 + '</li>';
-        portplatesHTML += '<li>Serial: ' + this.ports.serial + '</li>';
-        portplatesHTML += '</ul>';
+        var portplatesHTML ='<ul>';
+        for(var i=0;i<this.portplates.length;i++){
+            var a =this.portplates[i];
+            var p=[];
+            p.push(a.parallel?"Parallel":"");
+            p.push(a.dvid?"DVI-D":"");
+            p.push(a.rj45?"RJ-45":"");
+            p.push(a.ps2?"PS/2":"");
+            p.push(a.stereorca?"Stereo RCA":"");
+            p.push(a.serial?"Serial":"");
+            portplatesHTML+='<li>'+p.join(", ")+'</li>';
+        portplatesHTML+='</ul>';
+        var portsCountHTML = '<ul>';
+        portsCountHTML += '<li>Parallel: ' + this.ports.parallel + '</li>';
+        portsCountHTML += '<li>DVI-D: ' + this.ports.dvid + '</li>';
+        portsCountHTML += '<li>Stereo RCA: ' + this.ports.stereorca + '</li>';
+        portsCountHTML += '<li>PS/2: ' + this.ports.ps2 + '</li>';
+        portsCountHTML += '<li>RJ-45: ' + this.ports.rj45 + '</li>';
+        portsCountHTML += '<li>Serial: ' + this.ports.serial + '</li>';
+        portsCountHTML += '</ul>';
         $("#bombinfo").html(`<div>Serial Number: ${this.serialnumber.whole}</div>
         <div>Serial Number Letters: ${this.serialnumber.letters}</div>
         <div>Serial Number Numbers: ${this.serialnumber.numbers}</div>
@@ -246,6 +263,7 @@ function KtaneBombInfo() {
         <div>AA Batteries: ${this.batteries.aa}</div>
         <div>Indicators: ${indicatorsHTML}</div>
         <div>Portplates: ${portplatesHTML}</div>
+        <div>Ports Count: ${portsCountHTML}</div>
         <div>Strikes: ${this.strikes}</div>`);
     }
 }
