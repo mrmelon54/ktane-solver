@@ -35,6 +35,8 @@ function KtaneSolver() {
                 } else if (s[1] == "holders") {
                     this.bombinfo.batteries.holders = parseInt(s[2]);
                 }
+				
+				ktaneSpeak(`Batteries ${s[1]} ${s[2]}`);
             } catch (e) {
                 ktaneSpeak("Invalid number of batteries");
             }
@@ -54,6 +56,7 @@ function KtaneSolver() {
             }
             this.bombinfo.indicatorList.push(("*" + a).toLowerCase());
             this.bombinfo.displayBombInfo();
+			ktaneSpeak(`Lit indicator ${s[2]}`);
             return;
         } else if (t.indexOf("unlit indicator") == 0) {
             var s = t.split(" ");
@@ -68,11 +71,13 @@ function KtaneSolver() {
             }
             this.bombinfo.indicatorList.push((" " + a).toLowerCase());
             this.bombinfo.displayBombInfo();
+			ktaneSpeak(`Unlit indicator ${s[2]}`);
             return;
         } else if (t.indexOf("remove indicator") == 0) {
             if (this.bombinfo.indicatorList.length == 0) return;
             this.bombinfo.indicatorList.splice(this.bombinfo.indicatorList.length - 1, 1);
             this.bombinfo.displayBombInfo();
+			ktaneSpeak(`Removed last indicator`);
             return;
         } else if (t.indexOf("serial number") == 0) {
             var s = t.split(" ");
@@ -95,7 +100,12 @@ function KtaneSolver() {
             this.bombinfo.serialnumber.letters = this.bombinfo.serialnumber.whole.replace(/[^A-Z]/g, "").split("");
             this.bombinfo.serialnumber.numbers = this.bombinfo.serialnumber.whole.replace(/[^\d]/g, "").split("").map(d => parseInt(d));
             this.bombinfo.displayBombInfo();
-            return;
+            ktaneSpeak(`Serial number is ${this.bombinfo.serialnumber.whole.split("").map(function (obj) {
+				if (isNaN(parseInt(obj, 10))) return ktaneLetterToNato(obj);
+				
+				return obj;
+			}).join(" ")}`);
+			return;
         } else if (t.indexOf("port") == 0 || t.indexOf("portplate") == 0) {
             var s = t.split(" ");
             var p = {
@@ -107,25 +117,31 @@ function KtaneSolver() {
                 serial: false
             };
             if (s.includes("parallel")) p.parallel = true;
-            if (s.includes("dvid") || s.includes("dvi-d")) p.dvid = true;
-            if (s.includes("stereo")) p.stereorca = true;
-            if (s.includes("ps2")) p.ps2 = true;
-            if (s.includes("rj45")) p.rj45 = true;
-            if (s.includes("serial") || s.includes("cereal")) p.serial = true;
+            if (s.some(x => [ "divd", "dvi-d", "dvi" ].includes(x))) p.dvid = true;
+            if (s.some(x => [ "stereorca", "stereo", "rca" ].includes(x))) p.stereorca = true;
+            if (s.some(x => [ "ps2", "ps" ].includes(x))) p.ps2 = true;
+            if (s.some(x => [ "rj45", "rj", "45" ].includes(x))) p.rj45 = true;
+            if (s.some(x => [ "serial", "cereal" ].includes(x))) p.serial = true;
             this.bombinfo.portplates.push(p);
             this.bombinfo.recalculatePorts();
             this.bombinfo.displayBombInfo();
+			var portNames = [ "parallel", "dvid", "stereorca", "ps2", "rj45", "serial" ];
+			console.log([ 0, 1, 2, 3, 4, 5 ].filter(x => p[portNames[x]] == true).join(" "));
+			ktaneSpeak(`Port plate with ${[ 0, 1, 2, 3, 4, 5 ].map((x, y) => (p[portNames[y]] == true) ? portNames[y] : "").join(", ")}`);
             return;
         } else if (t.indexOf("remove port") == 0 || t.indexOf("remove portplate") == 0) {
             if (this.bombinfo.portplates.length == 0) return;
             this.bombinfo.portplates.splice(this.bombinfo.portplates.length - 1, 1);
             this.bombinfo.displayBombInfo();
+			ktaneSpeak("Removed last portplate");
             return;
         } else if (t.indexOf("strike") == 0) {
             var s = t.replace('strike ', '');
             var a = parseInt(s);
             if (!isNaN(a)) {
                 this.bombinfo.strikes = a;
+				this.bombinfo.displayBombInfo();
+				ktaneSpeak(`${a} strikes`);
             } else {
                 ktaneSpeak("Error parsing number of strikes");
             }
@@ -161,7 +177,7 @@ function KtaneSolver() {
 }
 
 function ktaneNatoToLetter(t) {
-    t = t.replace('ciara', 'sierra').replace('xray', 'x-ray');
+    t = t.replace('ciara', 'sierra').replace('ecco', 'echo').replace('xray', 'x-ray').replace('sulu', 'zulu');
     if (!"alpha;bravo;charlie;delta;echo;foxtrot;golf;hotel;india;juliet;kilo;lima;mike;november;oscar;papa;quebec;romeo;sierra;tango;uniform;victor;whiskey;x-ray;yankee;zulu".split(';').includes(t)) return null;
     return t[0];
 }

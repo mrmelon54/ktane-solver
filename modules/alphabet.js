@@ -9,17 +9,17 @@ function uniqueString(nowStr) {
 }
 
 for (var i = 0; i < args.length; i++)
-	args[i] = ktaneNatoToLetter(args[i]);
+	args[i] = args[i].length > 1 ? ktaneNatoToLetter(args[i]) : args[i];
 
 
 if (args.length !== 4) {
-	ktaneSpeak("I need four letters.");
+	ktaneSpeak("I need four letters");
 	
 	return;
 }
 
 if (uniqueString(args.join("")).length !== 4) {
-	ktaneSpeak("I need four distinct letters.");
+	ktaneSpeak("I need four distinct letters");
 	
 	return;
 }
@@ -54,4 +54,4 @@ var restLetters = except(args, shownLetters).sort();
 for (var i = 0; i < restLetters.length; i++)
 	shownLetters.push(restLetters[i]);
 
-ktaneSpeak(`Press letters ${shownLetters.map(x => ktaneLetterToNato(x)).join(" ")}.`);
+ktaneSpeak(`Press letters ${shownLetters.map(x => ktaneLetterToNato(x)).join(" ")}`);
