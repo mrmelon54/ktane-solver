@@ -1,6 +1,7 @@
 function KtaneSolver() {
     this.moduleList = ktaneModuleCommandInterface;
     this.bombinfo = new KtaneBombInfo();
+    this.bombinfo.displayBombInfo();
     this.runCommand = (t) => {
         t = t.toLowerCase();
         t = t.trim();
