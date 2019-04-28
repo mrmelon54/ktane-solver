@@ -42,6 +42,18 @@ bombinfo.portplates // returns an array of portplates
 bombinfo.ports.<port name> // returns an integer of the number of ports
 ```
 
+__**Portplates List**__
+
+This returns an array (see below for example).<br>
+This has 2 portplates one with a Serial, Stereo RCA and PS/2 the other with just a Parallel
+
+```
+[
+    {serial:true,stereorca:true,ps2:true,parallel:false,dvid:false,rj45:false},
+    {serial:false,stereorca:false,ps2:false,parallel:true,dvid:false,rj45:false}
+]
+```
+
 ### Display
 
 The display element is now sent in a variable helpfully called `displayElement`. HTML content can be added to it including lists and images.
