@@ -6,10 +6,10 @@ function KtaneSolver() {
         t = t.trim();
         var cmd = "";
         var action = null;
-        if(t.indexOf("help")==0) {
-            var s=t.replace('help','').trim();
-            var helpText="";
-            var helpName="";
+        if (t.indexOf("help") == 0) {
+            var s = t.replace('help', '').trim();
+            var helpText = "";
+            var helpName = "";
             for (var i = 0; i < Object.keys(this.moduleList).length; i++) {
                 for (var j = 0; j < this.moduleList[Object.keys(this.moduleList)[i]].alias.length; j++) {
                     if (s.indexOf(this.moduleList[Object.keys(this.moduleList)[i]].alias[j]) == 0) {
@@ -127,14 +127,48 @@ function KtaneSolver() {
         return ktaneNatoToLetter(t);
     }
 }
+
 function ktaneNatoToLetter(t) {
     t = t.replace('ciara', 'sierra').replace('xray', 'x-ray');
     if (!"alpha;bravo;charlie;delta;echo;foxtrot;golf;hotel;india;juliet;kilo;lima;mike;november;oscar;papa;quebec;romeo;sierra;tango;uniform;victor;whiskey;x-ray;yankee;zulu".split(';').includes(t)) return null;
     return t[0];
 }
 
+function ktaneLetterToNato(t) {
+    if (t.length !== 1) return;
+    var convertor = {
+        a: "alpha",
+        b: "bravo",
+        c: "charlie",
+        d: "delta",
+        e: "echo",
+        f: "foxtrot",
+        g: "golf",
+        h: "hotel",
+        i: "india",
+        j: "juliet",
+        k: "kilo",
+        l: "lima",
+        m: "mike",
+        n: "november",
+        o: "oscar",
+        p: "papa",
+        q: "quebec",
+        r: "romeo",
+        s: "sierra",
+        t: "tango",
+        u: "uniform",
+        v: "victor",
+        w: "whiskey",
+        x: "x-ray",
+        y: "yankee",
+        z: "zulu"
+    };
+    return convertor[t.toLowerCase()];
+}
+
 function KtaneBombInfo() {
-    this.strikes=0;
+    this.strikes = 0;
     this.serialnumber = {
         whole: "",
         letters: [],
@@ -147,15 +181,15 @@ function KtaneBombInfo() {
     this.indicatorList = [];
     this.indicators = {
         exists: (t) => {
-            t=t.toLowerCase()
+            t = t.toLowerCase()
             return this.indicators.isLit(t) || this.indicators.isUnlit(t);
         },
         isLit: (t) => {
-            t=t.toLowerCase()
+            t = t.toLowerCase()
             return this.indicatorList.includes("*" + t);
         },
         isUnlit: (t) => {
-            t=t.toLowerCase()
+            t = t.toLowerCase()
             return this.indicatorList.includes(" " + t);
         }
     }
@@ -220,7 +254,7 @@ window.ktaneSpeak = (t) => {
     var msg = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
     msg.voice = voices[2];
-    msg.lang="en-US';
+    msg.lang = "en-US";
     msg.text = t;
     speechSynthesis.speak(msg);
 }
