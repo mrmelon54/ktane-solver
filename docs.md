@@ -67,8 +67,13 @@ displayElement.prepend( <add content to the start> );
 ### Other useful functions
 
 ```
-ktaneNatoToLetter( <text> ); // returns the letter or null if it is an invalid word
+ktaneNatoToLetter( <word> ); // returns the letter or null if it is an invalid word
+ktaneLetterToNato( <letter> ); // returns the word or null if the input is invalid
 ```
+
+### External Assets
+
+All assets must be stored in the assets folder in a subfolder with the same name as the script file without the `.js`. The path to the modules assets is send in a variable called `assetsPath`.
 
 ### Speaking
 

@@ -6,6 +6,7 @@ function KtaneSolver() {
         t = t.toLowerCase();
         t = t.trim();
         var cmd = "";
+        var moduleTag="";
         var action = null;
         if (t.indexOf("help") == 0) {
             var s = t.replace('help', '').trim();
@@ -114,6 +115,7 @@ function KtaneSolver() {
                     if (t.indexOf(this.moduleList[Object.keys(this.moduleList)[i]].alias[j]) == 0) {
                         cmd = this.moduleList[Object.keys(this.moduleList)[i]].alias[j];
                         action = this.moduleList[Object.keys(this.moduleList)[i]].script;
+                        moduleTag=Object.keys(this.moduleList)[i];
                         break;
                     }
                 }
@@ -126,7 +128,7 @@ function KtaneSolver() {
         var s = t.split(cmd + " ");
         s.splice(0, 1);
         var a = s.join("");
-        action(this.bombinfo, $("#display"), a.split(" "));
+        action(this.bombinfo, $("#display"), `assets/${moduleTag}/`, a.split(" "));
     }
     this.toLetter = (t) => {
         return ktaneNatoToLetter(t);
@@ -140,7 +142,7 @@ function ktaneNatoToLetter(t) {
 }
 
 function ktaneLetterToNato(t) {
-    if (t.length !== 1) return;
+    if (t.length !== 1) return null;
     var convertor = {
         a: "alpha",
         b: "bravo",
