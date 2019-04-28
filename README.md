@@ -19,6 +19,15 @@ port <port names (parallel/dvid/rj45/ps2/stereo/serial)>
 remove port
 ```
 
+The port command adds a whole portplate with those ports on it (see example below).<br>
+The remove port command removes a whole portplate
+
+This adds 2 portplates one with a Serial, Stereo RCA and PS/2 the other with just a Parallel
+```
+port serial stereo ps2
+port parallel
+```
+
 ### Help Command
 ```
 help <module alias>
