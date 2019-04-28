@@ -73,6 +73,7 @@ displayElement.prepend( <add content to the start> );
 ```
 ktaneNatoToLetter( <word> ); // returns the letter or null if it is an invalid word
 ktaneLetterToNato( <letter> ); // returns the word or null if the input is invalid
+ktaneWordToNumber( <word> ); // returns the number or null if it is an invalid word
 ```
 
 ### External Assets
