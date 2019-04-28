@@ -42,6 +42,16 @@ bombinfo.portplates // returns an array of portplates
 bombinfo.ports.<port name> // returns an integer of the number of ports
 ```
 
+### Display
+
+The display element is now sent in a variable helpfully called `displayElement`. HTML content can be added to it including lists and images.
+
+```
+displayElement.html( <content> );
+displayElement.append( <add content to the end> );
+displayElement.prepend( <add content to the start> );
+```
+
 ### Other useful functions
 
 ```

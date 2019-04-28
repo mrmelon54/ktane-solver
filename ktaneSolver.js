@@ -126,7 +126,7 @@ function KtaneSolver() {
         var s = t.split(cmd + " ");
         s.splice(0, 1);
         var a = s.join("");
-        action(this.bombinfo, a.split(" "));
+        action(this.bombinfo, $("#display"), a.split(" "));
     }
     this.toLetter = (t) => {
         return ktaneNatoToLetter(t);

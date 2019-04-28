@@ -11,7 +11,7 @@ for item in g:
         theitem['script']="%%$$%%"
         log+="\n  - "+theitem['name']
         o+='"'+item.replace('modules\\','').replace('modules/','').replace('.js','')+'":'
-        o+=json.dumps(theitem).replace('"%%$$%%"','(bombinfo,args)=>{'+c+'}')
+        o+=json.dumps(theitem).replace('"%%$$%%"','(bombinfo,displayElement,args)=>{'+c+'}')
         o+=','
     f.close()
 o+='thisIsTheLastItemAndItIsNotActuallyNeededButIPutItHereAsAJoke:{"name":"","alias":[],"script":()=>{}}};'
