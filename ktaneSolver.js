@@ -220,6 +220,7 @@ window.ktaneSpeak = (t) => {
     var msg = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
     msg.voice = voices[2];
+    msg.lang="en-US';
     msg.text = t;
     speechSynthesis.speak(msg);
 }
