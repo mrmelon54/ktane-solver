@@ -25,7 +25,7 @@ function KtaneSolver() {
             $("#output").html(helpText);
             return;
         }
-        if (t.indexOf("batteries") == 0||t.indexOf("battery")==0) {
+        if (t.indexOf("batteries") == 0 || t.indexOf("battery") == 0) {
             var s = /[batteries|battery] (d|aa|holders) ?(\d+)/.exec(t);
             try {
                 if (s[1] == "d") {
@@ -43,7 +43,7 @@ function KtaneSolver() {
             return;
         } else if (t.indexOf("lit indicator") == 0) {
             var s = t.split(" ");
-            var a="";
+            var a = "";
             for (var i = 0; i < s.length; i++) {
                 if (["lit", "indicator"].includes(s[i])) continue;
                 if (this.toLetter(s[i]) !== null) {
@@ -57,7 +57,7 @@ function KtaneSolver() {
             return;
         } else if (t.indexOf("unlit indicator") == 0) {
             var s = t.split(" ");
-            var a="";
+            var a = "";
             for (var i = 0; i < s.length; i++) {
                 if (["unlit", "indicator"].includes(s[i])) continue;
                 if (this.toLetter(s[i]) !== null) {
@@ -96,7 +96,7 @@ function KtaneSolver() {
             this.bombinfo.serialnumber.numbers = this.bombinfo.serialnumber.whole.replace(/[^\d]/g, "").split("").map(d => parseInt(d));
             this.bombinfo.displayBombInfo();
             return;
-        } else if (t.indexOf("port") == 0) {
+        } else if (t.indexOf("port") == 0 || t.indexOf("portplate") == 0) {
             var s = t.split(" ");
             var p = {
                 parallel: false,
@@ -116,7 +116,7 @@ function KtaneSolver() {
             this.bombinfo.recalculatePorts();
             this.bombinfo.displayBombInfo();
             return;
-        } else if (t.indexOf("remove port") == 0) {
+        } else if (t.indexOf("remove port") == 0 || t.indexOf("remove portplate") == 0) {
             if (this.bombinfo.portplates.length == 0) return;
             this.bombinfo.portplates.splice(this.bombinfo.portplates.length - 1, 1);
             this.bombinfo.displayBombInfo();
@@ -200,12 +200,33 @@ function ktaneLetterToNato(t) {
 }
 
 function ktaneWordToNumber(t) {
-    var convertor={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,
-                   fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20,thirty:30};
+    var convertor = {
+        one: 1,
+        two: 2,
+        three: 3,
+        four: 4,
+        five: 5,
+        six: 6,
+        seven: 7,
+        eight: 8,
+        nine: 9,
+        ten: 10,
+        eleven: 11,
+        twelve: 12,
+        thirteen: 13,
+        fourteen: 14,
+        fifteen: 15,
+        sixteen: 16,
+        seventeen: 17,
+        eighteen: 18,
+        nineteen: 19,
+        twenty: 20,
+        thirty: 30
+    };
     try {
         return convertor[t].toString();
-    } catch(e) {
-        if(isNAN(parseInt(t)))return null;
+    } catch (e) {
+        if (isNAN(parseInt(t))) return null;
         return t;
     }
 }

@@ -11,8 +11,8 @@ A robot to help you solve bombs in Keep Talking and Nobody Explodes by being and
 ### Edgework Commands
 ```
 batteries <aa/d> <number>
-lit indicator <nato letters>
-unlit indicator <nato letters>
+lit indicator <nato letters or the letters for the indicators name>
+unlit indicator <nato letters or the letters for the indicators name>
 remove indicator
 serial number <nato letters or numbers>
 port <port names (parallel/dvid/rj45/ps2/stereo/serial)>
