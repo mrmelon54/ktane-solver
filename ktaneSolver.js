@@ -6,7 +6,7 @@ function KtaneSolver() {
         t = t.toLowerCase();
         t = t.trim();
         var cmd = "";
-        var moduleTag="";
+        var moduleTag = "";
         var action = null;
         if (t.indexOf("help") == 0) {
             var s = t.replace('help', '').trim();
@@ -36,6 +36,7 @@ function KtaneSolver() {
             } catch (e) {
                 ktaneSpeak("Invalid number of batteries");
             }
+            this.bombinfo.recalculateBatteries();
             this.bombinfo.displayBombInfo();
             return;
         } else if (t.indexOf("lit indicator") == 0) {
@@ -95,9 +96,9 @@ function KtaneSolver() {
             this.bombinfo.recalculatePorts();
             this.bombinfo.displayBombInfo();
             return;
-        } else if(t.indexOf("remove port")==0){
-            if(this.bombinfo.portplates.length==0)return;
-            this.bombinfo.portplates splice(this.bombinfo.portplates.length-1,1);
+        } else if (t.indexOf("remove port") == 0) {
+            if (this.bombinfo.portplates.length == 0) return;
+            this.bombinfo.portplates splice(this.bombinfo.portplates.length - 1, 1);
             this.bombinfo.displayBombInfo();
         } else if (t.indexOf("strike") == 0) {
             var s = t.replace('strike ', '');
@@ -115,7 +116,7 @@ function KtaneSolver() {
                     if (t.indexOf(this.moduleList[Object.keys(this.moduleList)[i]].alias[j]) == 0) {
                         cmd = this.moduleList[Object.keys(this.moduleList)[i]].alias[j];
                         action = this.moduleList[Object.keys(this.moduleList)[i]].script;
-                        moduleTag=Object.keys(this.moduleList)[i];
+                        moduleTag = Object.keys(this.moduleList)[i];
                         break;
                     }
                 }
@@ -183,7 +184,8 @@ function KtaneBombInfo() {
     };
     this.batteries = {
         d: 0,
-        aa: 0
+        aa: 0,
+        all: 0
     };
     this.indicatorList = [];
     this.indicators = {
@@ -228,6 +230,9 @@ function KtaneBombInfo() {
         }
         this.ports = count;
     }
+    this.recalculateBatteries = () => {
+        this.batteries.all = this.batteries.d + this.batteries.aa;
+    }
     this.displayBombInfo = () => {
         var indicatorsHTML = '<ul>';
         for (var i = 0; i < this.indicatorList.length; i++) {
@@ -238,27 +243,27 @@ function KtaneBombInfo() {
             }
         }
         indicatorsHTML += '</ul>';
-        var portplatesHTML ='<ul>';
-        for(var i=0;i<this.portplates.length;i++){
-            var a =this.portplates[i];
-            var p=[];
-            p.push(a.parallel?"Parallel":"");
-            p.push(a.dvid?"DVI-D":"");
-            p.push(a.rj45?"RJ-45":"");
-            p.push(a.ps2?"PS/2":"");
-            p.push(a.stereorca?"Stereo RCA":"");
-            p.push(a.serial?"Serial":"");
-            portplatesHTML+='<li>'+p.join(", ")+'</li>';
-        portplatesHTML+='</ul>';
-        var portsCountHTML = '<ul>';
-        portsCountHTML += '<li>Parallel: ' + this.ports.parallel + '</li>';
-        portsCountHTML += '<li>DVI-D: ' + this.ports.dvid + '</li>';
-        portsCountHTML += '<li>Stereo RCA: ' + this.ports.stereorca + '</li>';
-        portsCountHTML += '<li>PS/2: ' + this.ports.ps2 + '</li>';
-        portsCountHTML += '<li>RJ-45: ' + this.ports.rj45 + '</li>';
-        portsCountHTML += '<li>Serial: ' + this.ports.serial + '</li>';
-        portsCountHTML += '</ul>';
-        $("#bombinfo").html(`<div>Serial Number: ${this.serialnumber.whole}</div>
+        var portplatesHTML = '<ul>';
+        for (var i = 0; i < this.portplates.length; i++) {
+            var a = this.portplates[i];
+            var p = [];
+            p.push(a.parallel ? "Parallel" : "");
+            p.push(a.dvid ? "DVI-D" : "");
+            p.push(a.rj45 ? "RJ-45" : "");
+            p.push(a.ps2 ? "PS/2" : "");
+            p.push(a.stereorca ? "Stereo RCA" : "");
+            p.push(a.serial ? "Serial" : "");
+            portplatesHTML += '<li>' + p.join(", ") + '</li>';
+            portplatesHTML += '</ul>';
+            var portsCountHTML = '<ul>';
+            portsCountHTML += '<li>Parallel: ' + this.ports.parallel + '</li>';
+            portsCountHTML += '<li>DVI-D: ' + this.ports.dvid + '</li>';
+            portsCountHTML += '<li>Stereo RCA: ' + this.ports.stereorca + '</li>';
+            portsCountHTML += '<li>PS/2: ' + this.ports.ps2 + '</li>';
+            portsCountHTML += '<li>RJ-45: ' + this.ports.rj45 + '</li>';
+            portsCountHTML += '<li>Serial: ' + this.ports.serial + '</li>';
+            portsCountHTML += '</ul>';
+            $("#bombinfo").html(`<div>Serial Number: ${this.serialnumber.whole}</div>
         <div>Serial Number Letters: ${this.serialnumber.letters}</div>
         <div>Serial Number Numbers: ${this.serialnumber.numbers}</div>
         <div>D Batteries: ${this.batteries.d}</div>
@@ -267,14 +272,14 @@ function KtaneBombInfo() {
         <div>Portplates: ${portplatesHTML}</div>
         <div>Ports Count: ${portsCountHTML}</div>
         <div>Strikes: ${this.strikes}</div>`);
+        }
     }
-}
-window.ktaneSpeak = (t) => {
-    console.log(`Saying: ${t}`);
-    var msg = new SpeechSynthesisUtterance();
-    var voices = window.speechSynthesis.getVoices();
-    msg.voice = voices[2];
-    msg.lang = "en-US";
-    msg.text = t;
-    speechSynthesis.speak(msg);
-}
+    window.ktaneSpeak = (t) => {
+        console.log(`Saying: ${t}`);
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.voice = voices[2];
+        msg.lang = "en-US";
+        msg.text = t;
+        speechSynthesis.speak(msg);
+    }
