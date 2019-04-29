@@ -5,6 +5,7 @@ function KtaneSolver() {
     this.runCommand = (t) => {
         t = t.toLowerCase();
         t = t.trim();
+		t = t.replace("in Decatur", "indicator");
         var cmd = "";
         var moduleTag = "";
         var action = null;
@@ -26,7 +27,13 @@ function KtaneSolver() {
             return;
         }
         if (t.indexOf("batteries") == 0 || t.indexOf("battery") == 0) {
+			t = t.replace("to", "2").replace("for", "4");
+			
+			for (var i = 0; i < 10; i++)
+				t = t.replace(ktaneNumberToWord(i), i.toString());
+
             var s = /[batteries|battery] (d|aa|holders) ?(\d+)/.exec(t);
+			
             try {
                 if (s[1] == "d") {
                     this.bombinfo.batteries.d = parseInt(s[2]);
@@ -36,18 +43,18 @@ function KtaneSolver() {
                     this.bombinfo.batteries.holders = parseInt(s[2]);
                 }
 				
-				ktaneSpeak(`Batteries ${s[1]} ${s[2]}`);
+				ktaneSpeak(`Battery ${s[1]} ${s[2]}`);
             } catch (e) {
                 ktaneSpeak("Invalid number of batteries");
             }
             this.bombinfo.recalculateBatteries();
             this.bombinfo.displayBombInfo();
             return;
-        } else if (t.indexOf("lit indicator") == 0) {
+        } else if (t.indexOf("lit indicator") == 0 || t.indexOf("on indicator") == 0) {
             var s = t.split(" ");
             var a = "";
             for (var i = 0; i < s.length; i++) {
-                if (["lit", "indicator"].includes(s[i])) continue;
+                if (["lit", "on", "indicator"].includes(s[i])) continue;
                 if (this.toLetter(s[i]) !== null) {
                     a += this.toLetter(s[i]);
                 } else {
@@ -56,13 +63,13 @@ function KtaneSolver() {
             }
             this.bombinfo.indicatorList.push(("*" + a).toLowerCase());
             this.bombinfo.displayBombInfo();
-			ktaneSpeak(`Lit indicator ${s[2]}`);
+			ktaneSpeak(`Lit indicator ${a}`);
             return;
-        } else if (t.indexOf("unlit indicator") == 0) {
+        } else if (t.indexOf("unlit indicator") == 0 || t.indexOf("off indicator") == 0) {
             var s = t.split(" ");
             var a = "";
             for (var i = 0; i < s.length; i++) {
-                if (["unlit", "indicator"].includes(s[i])) continue;
+                if (["unlit", "off", "indicator"].includes(s[i])) continue;
                 if (this.toLetter(s[i]) !== null) {
                     a += this.toLetter(s[i]);
                 } else {
@@ -71,7 +78,7 @@ function KtaneSolver() {
             }
             this.bombinfo.indicatorList.push((" " + a).toLowerCase());
             this.bombinfo.displayBombInfo();
-			ktaneSpeak(`Unlit indicator ${s[2]}`);
+			ktaneSpeak(`Unlit indicator ${a}`);
             return;
         } else if (t.indexOf("remove indicator") == 0) {
             if (this.bombinfo.indicatorList.length == 0) return;
@@ -80,9 +87,23 @@ function KtaneSolver() {
 			ktaneSpeak(`Removed last indicator`);
             return;
         } else if (t.indexOf("serial number") == 0) {
+			t = t.replace("serial number ", "");
+			t = t.replace("tree", "3").replace("for", "4").replace("mic", "mike");
+			
+			for (var i = 0; i < 10; i++) {
+				for (var j = 0; j < 6; j++) {
+					t = t.replace(ktaneNumberToWord(i), i.toString());
+				}
+			}
+			
             var s = t.split(" ");
-            s.shift();
-            s.shift();
+			
+            if (s.length != 6) {
+				ktaneSpeak("Invalid serial number");
+				
+				return;
+			}
+			
             this.bombinfo.serialnumber = {
                 whole: "",
                 letters: [],
@@ -126,8 +147,10 @@ function KtaneSolver() {
             this.bombinfo.recalculatePorts();
             this.bombinfo.displayBombInfo();
 			var portNames = [ "parallel", "dvid", "stereorca", "ps2", "rj45", "serial" ];
-			console.log([ 0, 1, 2, 3, 4, 5 ].filter(x => p[portNames[x]] == true).join(" "));
-			ktaneSpeak(`Port plate with ${[ 0, 1, 2, 3, 4, 5 ].map((x, y) => (p[portNames[y]] == true) ? portNames[y] : "").join(", ")}`);
+			var addedPorts = [ 0, 1, 2, 3, 4, 5 ].map((x, y) => (p[portNames[y]] == true) ? portNames[y] : "").join(", ");
+			console.log(addedPorts.split(", ").join(""));
+			console.log(addedPorts.split(", ").join("").length);
+			ktaneSpeak(`${(addedPorts.split(", ").join("").length >= 1) ? "Portplate with " + addedPorts : "Empty portplate"}}`);
             return;
         } else if (t.indexOf("remove port") == 0 || t.indexOf("remove portplate") == 0) {
             if (this.bombinfo.portplates.length == 0) return;
@@ -217,6 +240,7 @@ function ktaneLetterToNato(t) {
 
 function ktaneWordToNumber(t) {
     var convertor = {
+		zero: 0,
         one: 1,
         two: 2,
         three: 3,
@@ -245,6 +269,14 @@ function ktaneWordToNumber(t) {
         if (isNAN(parseInt(t))) return null;
         return t;
     }
+}
+
+function ktaneNumberToWord(n) {
+	var words = [ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" ];
+	
+	if (n < 0 || n > words.length) return null;
+	
+	return words[n];
 }
 
 function KtaneBombInfo() {
