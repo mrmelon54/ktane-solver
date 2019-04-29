@@ -17,7 +17,7 @@ function KtaneSolver() {
                 for (var j = 0; j < this.moduleList[Object.keys(this.moduleList)[i]].alias.length; j++) {
                     if (s.indexOf(this.moduleList[Object.keys(this.moduleList)[i]].alias[j]) == 0) {
                         helpText = this.moduleList[Object.keys(this.moduleList)[i]].help;
-                        helpName = this.moduleList[Object.keys(this.moduleList)[i]].names;
+                        helpName = this.moduleList[Object.keys(this.moduleList)[i]].name;
                         break;
                     }
                 }
