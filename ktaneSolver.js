@@ -5,7 +5,7 @@ function KtaneSolver() {
     this.runCommand = (t) => {
         t = t.toLowerCase();
         t = t.trim();
-		t = replaceWords(t, [ "in Decatur", "4th", "part", "wart" ], [ "indicator", "port", "port", "port" ]);
+		t = replaceWords(t, [ "in Decatur", "4th", "part", "wart", "bart", "fort" ], [ "indicator", "port", "port", "port", "port", "port" ]);
         var cmd = "";
         var moduleTag = "";
         var action = null;
@@ -87,7 +87,7 @@ function KtaneSolver() {
 			ktaneSpeak(`Removed last indicator`);
             return;
         } else if (t.indexOf("serial number") == 0) {
-			t = replaceWords(t, [ "serial number ", "to", "tree", "for", "mic", "-" ], [ "", "2", "3", "4", "mike", "" ]);
+			t = replaceWords(t, [ "serial number ", " to ", "tree", "for", "mic", "you", "-" ], [ "", "2", "3", "4", "mike", "u", "" ]);
 			
 			for (var i = 0; i < 10; i++) {
 				for (var j = 0; j < 6; j++) {
@@ -114,7 +114,7 @@ function KtaneSolver() {
             this.bombinfo.serialnumber.numbers = this.bombinfo.serialnumber.whole.replace(/[^\d]/g, "").split("").map(d => parseInt(d));
             this.bombinfo.displayBombInfo();
             ktaneSpeak(`Serial number is ${this.bombinfo.serialnumber.whole.split("").map(function (obj) {
-				if (isNaN(parseInt(obj, 10))) return ktaneLetterToNato(obj);
+				if (isNaN(obj)) return ktaneLetterToNato(obj);
 				
 				return obj;
 			}).join(" ")}`);
@@ -140,7 +140,7 @@ function KtaneSolver() {
             this.bombinfo.displayBombInfo();
 			var portNames = [ "parallel", "dvid", "stereorca", "ps2", "rj45", "serial" ];
 			var addedPorts = [ 0, 1, 2, 3, 4, 5 ].map((x, y) => (p[portNames[y]] == true) ? portNames[y] : "").join(", ");
-			ktaneSpeak(`${(addedPorts.split(", ").join("").length >= 1) ? "Portplate with " + addedPorts : "Empty portplate"}}`);
+			ktaneSpeak(`${(addedPorts.split(", ").join("").length >= 1) ? "Portplate with " + addedPorts : "Empty portplate"}`);
             return;
         } else if (t.indexOf("remove port") == 0 || t.indexOf("remove portplate") == 0) {
             if (this.bombinfo.portplates.length == 0) return;
@@ -190,7 +190,7 @@ function KtaneSolver() {
 }
 
 function ktaneNatoToLetter(t) {
-	t = replaceWords(t, [ "clara", "ecco", "xray", "sulu" ], [ "sierra", "echo", "x-ray", "zulu" ]);
+	t = replaceWords(t, [ "clara", "ecco", "joliet", "xray", "sulu" ], [ "sierra", "echo", "juliet", "x-ray", "zulu" ]);
     if (!"alpha;bravo;charlie;delta;echo;foxtrot;golf;hotel;india;juliet;kilo;lima;mike;november;oscar;papa;quebec;romeo;sierra;tango;uniform;victor;whiskey;x-ray;yankee;zulu".split(';').includes(t)) return null;
     return t[0];
 }
