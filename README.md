@@ -10,13 +10,14 @@ A robot to help you solve bombs in Keep Talking and Nobody Explodes by being and
 
 ### Edgework Commands
 ```
-batteries <aa/d> <number>
-lit indicator <nato letters or the letters for the indicators name>
-unlit indicator <nato letters or the letters for the indicators name>
+serial number <combination of numbers and letters of length 6>
+battery/batteries <aa/d> <number>
+on/lit indicator <nato letters or the letters for the indicators name>
+off/unlit indicator <nato letters or the letters for the indicators name>
 remove indicator
 serial number <nato letters or numbers>
-port <port names (parallel/dvid/rj45/ps2/stereo/serial)>
-remove port
+port/portplate <port names (parallel/dvid/rj45/ps2/stereo/serial)>
+remove port/portplate
 ```
 
 The port command adds a whole portplate with those ports on it (see example below).<br>

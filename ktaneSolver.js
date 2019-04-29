@@ -5,7 +5,7 @@ function KtaneSolver() {
     this.runCommand = (t) => {
         t = t.toLowerCase();
         t = t.trim();
-		t = t.replace("in Decatur", "indicator");
+		t = replaceWords(t, [ "in Decatur", "4th", "part", "wart" ], [ "indicator", "port", "port", "port" ]);
         var cmd = "";
         var moduleTag = "";
         var action = null;
@@ -27,7 +27,7 @@ function KtaneSolver() {
             return;
         }
         if (t.indexOf("batteries") == 0 || t.indexOf("battery") == 0) {
-			t = t.replace("to", "2").replace("for", "4");
+			t = replaceWords(t, [ "to", "for" ], [ "2", "4" ]);
 			
 			for (var i = 0; i < 10; i++)
 				t = t.replace(ktaneNumberToWord(i), i.toString());
@@ -87,8 +87,7 @@ function KtaneSolver() {
 			ktaneSpeak(`Removed last indicator`);
             return;
         } else if (t.indexOf("serial number") == 0) {
-			t = t.replace("serial number ", "");
-			t = t.replace("tree", "3").replace("for", "4").replace("mic", "mike");
+			t = replaceWords(t, [ "serial number ", "to", "tree", "for", "mic", "-" ], [ "", "2", "3", "4", "mike", "" ]);
 			
 			for (var i = 0; i < 10; i++) {
 				for (var j = 0; j < 6; j++) {
@@ -98,19 +97,12 @@ function KtaneSolver() {
 			
             var s = t.split(" ");
 			
-            if (s.length != 6) {
-				ktaneSpeak("Invalid serial number");
-				
-				return;
-			}
-			
             this.bombinfo.serialnumber = {
                 whole: "",
                 letters: [],
                 numbers: []
             };
             for (var i = 0; i < s.length; i++) {
-                if (["serial", "number"].includes(s[i])) continue;
                 if (this.toLetter(s[i]) !== null) {
                     this.bombinfo.serialnumber.whole += this.toLetter(s[i]);
                 } else {
@@ -148,8 +140,6 @@ function KtaneSolver() {
             this.bombinfo.displayBombInfo();
 			var portNames = [ "parallel", "dvid", "stereorca", "ps2", "rj45", "serial" ];
 			var addedPorts = [ 0, 1, 2, 3, 4, 5 ].map((x, y) => (p[portNames[y]] == true) ? portNames[y] : "").join(", ");
-			console.log(addedPorts.split(", ").join(""));
-			console.log(addedPorts.split(", ").join("").length);
 			ktaneSpeak(`${(addedPorts.split(", ").join("").length >= 1) ? "Portplate with " + addedPorts : "Empty portplate"}}`);
             return;
         } else if (t.indexOf("remove port") == 0 || t.indexOf("remove portplate") == 0) {
@@ -200,7 +190,7 @@ function KtaneSolver() {
 }
 
 function ktaneNatoToLetter(t) {
-    t = t.replace('ciara', 'sierra').replace('ecco', 'echo').replace('xray', 'x-ray').replace('sulu', 'zulu');
+	t = replaceWords(t, [ "clara", "ecco", "xray", "sulu" ], [ "sierra", "echo", "x-ray", "zulu" ]);
     if (!"alpha;bravo;charlie;delta;echo;foxtrot;golf;hotel;india;juliet;kilo;lima;mike;november;oscar;papa;quebec;romeo;sierra;tango;uniform;victor;whiskey;x-ray;yankee;zulu".split(';').includes(t)) return null;
     return t[0];
 }
@@ -277,6 +267,15 @@ function ktaneNumberToWord(n) {
 	if (n < 0 || n > words.length) return null;
 	
 	return words[n];
+}
+
+function replaceWords(original, words, replacers) {
+	if (words.length <= 0 || replacers.length <= 0) return original;
+	
+	for (var i = 0; i < words.length; i++)
+		original = original.replace(words[i], replacers[i]);
+	
+	return original;
 }
 
 function KtaneBombInfo() {
