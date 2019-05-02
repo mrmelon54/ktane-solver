@@ -1,2 +1,2 @@
 @ECHO OFF
-python -m http.server
+python -m http.server 8000
