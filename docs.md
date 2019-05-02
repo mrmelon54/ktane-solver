@@ -4,10 +4,10 @@ Here is some documentation on how to create modules for KTaNE Solver. If you nee
 
 ### Module Info
 
-A simple JSON string surrounded by `//$$` and `$$` to give some information about the module.
+Add a JSON line to `meta.json` to give some information about the module.
 
 ```
-//$$ {"name":" <module name> ","alias":[ <array of command names> ],"help": <a description of the command> } $$
+{"name":" <module name> ","id":" <name of the module's script without .js> ","alias":[ <array of command names> ],"help": <a description of the command> }
 ```
 
 ### Arugments
@@ -40,7 +40,7 @@ bombinfo.indicators.isLit( <name> ); // returns boolean
 bombinfo.indicators.isUnlit( <name> ); // returns boolean
 
 // Ports
-bombinfo.portplates // returns an array of portplates
+bombinfo.portplates // returns an array of portplates (see below for more info)
 bombinfo.ports.<port name> // returns an integer of the number of ports
 bombinfo.ports.all // returns an integer
 // valid port names are "parallel", "dvid", "stereorca", "ps2", "rj45" and "serial"

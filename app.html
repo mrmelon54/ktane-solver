@@ -1,79 +1,85 @@
-<div>
-    <button id="start-record-button" style="width:50px;height:50px;">Listen</button>
-    <button id="stop-record-button" style="width:50px;height:50px;">Stop</button>
-    <input id="text-input" type="text" style="vertical-align:top;">
-    <button id="send-command-button" style="vertical-align:top;">Send Command</button>
-</div>
-<div id="speech-line" style="position:fixed;top:8px;left:420px;"></div>
-<div id="bombinfo" style="width:260px;margin-top:8px;"></div>
-<div id="display" style="position: fixed;top: 28px;left: 260px;width: calc(100vw - 268px);height: calc(100vh - 36px);"></div>
+<html>
+
+<body>
+    <div>
+        <button id="start-record-button" style="width:50px;height:50px;">Listen</button>
+        <button id="stop-record-button" style="width:50px;height:50px;">Stop</button>
+        <input id="text-input" type="text" style="vertical-align:top;">
+        <button id="send-command-button" style="vertical-align:top;">Send Command</button>
+    </div>
+    <div id="speech-line" style="position:fixed;top:8px;left:420px;"></div>
+    <div id="bombinfo" style="width:260px;margin-top:8px;"></div>
+    <div id="display" style="position: fixed;top: 28px;left: 260px;width: calc(100vw - 268px);height: calc(100vh - 36px);"></div>
 
 
-<script src="jquery.js"></script>
-<script src="ktaneSolver.js"></script>
-<script src="ktaneModules.js"></script>
-<script>
-    window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
-    var finalTranscript = '';
-    var autoRestart = false;
-    var lastStartedAt = new Date().getTime();
-    var finalTranscriptComplete = true;
-    var ktaneSolver = () => {};
-    $(document).ready(() => {
-        ktaneSolver = new KtaneSolver();
-    })
-    var recognition = new window.SpeechRecognition();
-    recognition.interimResults = true;
-    recognition.maxAlternatives = 10;
-    recognition.continuous = true;
-    recognition.lang = 'en-US';
-    recognition.onresult = (event) => {
-        let interimTranscript = '';
-        if (finalTranscriptComplete) finalTranscript = '';
-        finalTranscriptComplete = false;
-        for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
-            let transcript = event.results[i][0].transcript;
-            if (event.results[i].isFinal) {
-                finalTranscript += transcript;
-                finalTranscriptComplete = true;
-                ktaneSolver.runCommand(finalTranscript);
-            } else {
-                interimTranscript += transcript;
+    <script src="jquery.js"></script>
+    <script src="ktaneSolver.js"></script>
+    <script src="ktaneModules.js"></script>
+    <script>
+        window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+        var finalTranscript = '';
+        var autoRestart = false;
+        var lastStartedAt = new Date().getTime();
+        var finalTranscriptComplete = true;
+        var ktaneSolver = () => {};
+        $(document).ready(() => {
+            ktaneSolver = new KtaneSolver();
+        })
+        var recognition = new window.SpeechRecognition();
+        recognition.interimResults = true;
+        recognition.maxAlternatives = 10;
+        recognition.continuous = true;
+        recognition.lang = 'en-US';
+        recognition.onresult = (event) => {
+            let interimTranscript = '';
+            if (finalTranscriptComplete) finalTranscript = '';
+            finalTranscriptComplete = false;
+            for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
+                let transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    finalTranscript += transcript;
+                    finalTranscriptComplete = true;
+                    ktaneSolver.runCommand(finalTranscript);
+                } else {
+                    interimTranscript += transcript;
+                }
             }
+            $("#speech-line").html(finalTranscriptComplete ? finalTranscript : '<i style="color:#ddd;">' + interimTranscript + '</i>');
         }
-        $("#speech-line").html(finalTranscriptComplete ? finalTranscript : '<i style="color:#ddd;">' + interimTranscript + '</i>');
-    }
-    recognition.onend = function() {
-        if (autoRestart) {
-            var timeSinceLastStart = new Date().getTime() - lastStartedAt;
-            if (timeSinceLastStart < 1000) {
-                setTimeout(function() {
+        recognition.onend = function() {
+            if (autoRestart) {
+                var timeSinceLastStart = new Date().getTime() - lastStartedAt;
+                if (timeSinceLastStart < 1000) {
+                    setTimeout(function() {
+                        recognition.start();
+                    }, 1000 - timeSinceLastStart);
+                } else {
                     recognition.start();
-                }, 1000 - timeSinceLastStart);
-            } else {
-                recognition.start();
+                }
             }
-        }
-    };
-    $("#start-record-button").click(() => {
-        try {
-            autoRestart=true;
-            lastStartedAt = new Date().getTime();
-            recognition.start();
-        } catch (e) {}
-    });
-    $("#stop-record-button").click(() => {
-        try {
-            autoRestart=false;
-            recognition.stop();
-        } catch (e) {}
-    });
-    $("#send-command-button").click(() => {
-        var v=$("#text-input").val();
-        $("#text-input").val('');
-        ktaneSolver.runCommand(v);
-    });
-    $("#text-input").on('keydown',e=>{
-        if(e.which===13)$("#send-command-button").click();
-    });
-</script>
+        };
+        $("#start-record-button").click(() => {
+            try {
+                autoRestart = true;
+                lastStartedAt = new Date().getTime();
+                recognition.start();
+            } catch (e) {}
+        });
+        $("#stop-record-button").click(() => {
+            try {
+                autoRestart = false;
+                recognition.stop();
+            } catch (e) {}
+        });
+        $("#send-command-button").click(() => {
+            var v = $("#text-input").val();
+            $("#text-input").val('');
+            ktaneSolver.runCommand(v);
+        });
+        $("#text-input").on('keydown', e => {
+            if (e.which === 13) $("#send-command-button").click();
+        });
+    </script>
+</body>
+
+</html>
