@@ -28,7 +28,10 @@
 
             if (!storageCheck() || !localStorage.getItem('__ktane-solver__-meta')) {
                 alert('Unable to load modules\nPreparing to update');
-                window.location = 'upgrade.html';
+                setTimeout(() => {
+                    window.location = 'upgrade.html';
+                }, 1);
+                return;
             } else {
                 console.log(`Checking for updates`);
                 var oldMetaData = JSON.parse(localStorage.getItem('__ktane-solver__-meta'));

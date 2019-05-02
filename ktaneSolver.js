@@ -4,7 +4,6 @@ function KtaneSolver() {
     this.bombinfo.displayBombInfo();
     this.runCommand = (t) => {
         this.moduleList = ktaneModuleCommandInterface;
-        console.log(this.moduleList);
         t = t.toLowerCase();
         t = t.trim();
 		t = replaceWords(t, [ "in Decatur", "4th", "part", "wart", "bart", "fort" ], [ "indicator", "port", "port", "port", "port", "port" ]);

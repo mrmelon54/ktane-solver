@@ -15,7 +15,6 @@
             if (storageCheck()) {
                 checkUpdateStats();
                 $.getJSON('meta.json', d => {
-                    console.log(d);
                     modCount = d.modules.length;
                     modGrab = 0;
                     modsGrabbed = 0;
@@ -38,29 +37,23 @@
                             $.ajax({
                                 cache: false,
                                 url: 'modules/' + d.modules[i].id + '.js',
+                                dataType: 'text',
                                 success: a => {
                                     localStorage.setItem('__ktane-solver__-module-' + d.modules[i].id, btoa(a));
                                     modsGrabbed++;
                                     checkUpdateStats();
                                 },
-                                error: () => {
+                                error: (e) => {
                                     if (!errorLoadingModule) {
                                         errorLoadingModule = true;
                                         moduleThatFailed = d.modules[i].id;
                                     } else {
                                         moduleThatFailed += " -- " + d.modules[i].id;
                                     }
+                                    checkUpdateStats();
                                 }
                             })
-                            $.getScript('modules/' + d.modules[i].id + '.js', d => {
-                                localStorage.setItem('ktane-solver-module-' + d.modules[i].id, btoa(d));
-                                console.log(`Module "${d.modules[i].name}" has been updated or installed`);
-                                modsGrabbed++;
-                                checkUpdateStats();
-                            })
-                        } else {
-                            console.log(`Module "${d.modules[i].name}" is already loaded`);
-                        }
+                        } else {}
                     }
                     modsAddedToGrab = true;
                     checkUpdateStats();
@@ -77,10 +70,9 @@
                 Error loading modules: ${errorLoadingModule}<br>
                 Module(s) that failed: ${moduleThatFailed}<br>`);
             if (modsAddedToGrab && modGrab == modsGrabbed) {
-                alert("Restarting app soon");
-                setTimeout(()=>{
-                    window.location="app.html";
-                },5000);
+                setTimeout(() => {
+                    window.location = "app.html";
+                }, 1);
             }
         }
     </script>
