@@ -4,10 +4,11 @@ Here is some documentation on how to create modules for KTaNE Solver. If you nee
 
 ### Module Info
 
-Add a JSON line to `meta.json` to give some information about the module.
+Add a JSON line to `meta.json` to give some information about the module.<br>
+Update the version number each time you make changes to the module or it won't update from within the app.
 
 ```
-{"name":" <module name> ","id":" <name of the module's script without .js> ","alias":[ <array of command names> ],"help": <a description of the command> }
+{"name":" <module name> ","id":" <name of the module's script without .js> ","alias":[ <array of command names> ],"help": <a description of the command> ,"version": <an integer for the version> }
 ```
 
 ### Arugments
