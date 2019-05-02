@@ -97,6 +97,7 @@ ktaneSpeak(<text>);
 2. Run the `server_windows.cmd` file
 3. Navigate to `http://localhost:8000/` in your browser
 4. To test a single module head on over to `http://localhost:8000`
+5. Running `server_windows.cmd` may just quickly flash up a window if so ask on the Discord server about adding Python to the environment variables
 
 #### Linux
 
