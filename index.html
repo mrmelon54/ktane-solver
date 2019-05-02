@@ -70,7 +70,7 @@
                 var needUpdates = false;
                 $.getJSON('meta.json', newMetaData => {
                     var checkedModules = [];
-                    for (var i = 0; i < newMetaData.modules; i++) {
+                    for (var i = 0; i < newMetaData.modules.length; i++) {
                         var m = oldMetaData.modules.filter(d => d.id === newMetaData.modules[i].id);
                         if (m.length == 0) {
                             needUpdates = true;
