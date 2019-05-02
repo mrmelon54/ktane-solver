@@ -1,20 +1,16 @@
-function except(arr1, arr2) {
-	return arr1.filter(x => arr2.indexOf(x) == -1);
-}
+function except(arr1, arr2) { return arr1.filter(x => arr2.indexOf(x) == -1); }
+function uniqueString(nowStr) { return [ ...new Set(nowStr.split("")) ].join(""); }
 
-function uniqueString(nowStr) {
-	return [ ...new Set(nowStr.split("")) ].join("");
-}
-
-for (var i = 0; i < args.length; i++)
-	args[i] = args[i].length > 1 ? ktaneNatoToLetter(args[i]) : args[i];
-
+if (args.length === 1) args = args[0].split("");
 
 if (args.length !== 4) {
 	ktaneSpeak("I need four letters");
 
 	return;
 }
+
+for (var i = 0; i < args.length; i++)
+	args[i] = args[i].length > 1 ? ktaneNatoToLetter(args[i]) : args[i];
 
 if (uniqueString(args.join("")).length !== 4) {
 	ktaneSpeak("I need four distinct letters");
