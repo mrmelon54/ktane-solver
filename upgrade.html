@@ -7,6 +7,7 @@
         var modCount = 0;
         var modGrab = 0;
         var modsGrabbed = 0;
+        var modsAddedToGrab = false;
         var oldVersionsExist = false;
         var errorLoadingModule = false;
         var moduleThatFailed = "";
@@ -22,11 +23,15 @@
                     for (let i = 0; i < modCount; i++) {
                         var oldInfo = localStorage.getItem('__ktane-solver__-meta');
                         if (!oldInfo) oldVersionsExist = true;
-                        localStorage.setItem('__ktane-solver__-meta', d);
+                        localStorage.setItem('__ktane-solver__-meta', JSON.stringify(d));
                         var a = localStorage.getItem('__ktane-solver__-module-' + d.modules[i].id);
                         var newVersionExists = false;
-                        if (oldVersionsExist) {
-                            newVersionExists = d.modules[i].version > oldInfo.modules[i].version;
+                        try {
+                            if (oldVersionsExist) {
+                                newVersionExists = d.modules[i].version > oldInfo.modules[i].version;
+                            }
+                        } catch (e) {
+                            newVersionExists = true;
                         }
                         if (!a || newVersionExists) {
                             modGrab++;
@@ -57,6 +62,7 @@
                             console.log(`Module "${d.modules[i].name}" is already loaded`);
                         }
                     }
+                    modsAddedToGrab = true;
                     checkUpdateStats();
                 })
             } else {
@@ -70,6 +76,12 @@
                 Modules completed updating: ${modsGrabbed}<br>
                 Error loading modules: ${errorLoadingModule}<br>
                 Module(s) that failed: ${moduleThatFailed}<br>`);
+            if (modsAddedToGrab && modGrab == modsGrabbed) {
+                alert("Restarting app soon");
+                setTimeout(()=>{
+                    window.location="app.html";
+                },5000);
+            }
         }
     </script>
     <div id="output-area"></div>
