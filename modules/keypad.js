@@ -1,5 +1,3 @@
-//$$ {"name":"Keypad","vanilla":true,"alias":["keypad"],"help":"keypad <position numbers 1=TL 2=TR 3=BL 4=BR>"} $$
-
 function unique(nowArr) {
     return [...new Set(nowArr)].length == nowArr.length;
 }

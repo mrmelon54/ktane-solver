@@ -1,0 +1,11 @@
+{
+    "modules": [
+        {"name": "Alphabet","id":"alphabet","alias": ["alphabet"],"help": "alphabet <letters>","version":1},
+        {"name": "Colorful Madness","id":"colorfulmadness","alias": ["colorful madness"],"help": "colorful madness <has red-yellow> <letters>","version":1},
+        {"name":"Complicated Wires","id":"complicatedwires","vanilla":true,"alias":["complicated wires"],"help":"complicated wires <colour>","version":1},
+        {"name":"Keypad","id":"keypad","vanilla":true,"alias":["keypad"],"help":"keypad <symbol names>/list","version":1},
+        {"name":"Simon Says","id":"simonsays","vanilla":true,"alias":["simon","simon says"],"help":"simon says <list of colours>","version":1},
+        {"name":"The Button","id":"thebutton","vanilla":true,"alias":["button"],"help":"button <colour> <word>","version":1},
+        {"name":"Wires","id":"wires","vanilla":true,"alias":["wires","simple wires"],"help":"wires <list of colours>","version":1}
+    ]
+}

@@ -1,0 +1,90 @@
+<html>
+
+<body>
+    <script src="jquery.js"></script>
+    <script src="storageCheck.js"></script>
+    <script>
+        var modCount = 0;
+        var modGrab = 0;
+        var modsGrabbed = 0;
+        var modsAddedToGrab = false;
+        var oldVersionsExist = false;
+        var errorLoadingModule = false;
+        var moduleThatFailed = "";
+        $(document).ready(() => {
+            if (storageCheck()) {
+                checkUpdateStats();
+                $.getJSON('meta.json', d => {
+                    console.log(d);
+                    modCount = d.modules.length;
+                    modGrab = 0;
+                    modsGrabbed = 0;
+                    oldVersionsExist = false;
+                    for (let i = 0; i < modCount; i++) {
+                        var oldInfo = localStorage.getItem('__ktane-solver__-meta');
+                        if (!oldInfo) oldVersionsExist = true;
+                        localStorage.setItem('__ktane-solver__-meta', JSON.stringify(d));
+                        var a = localStorage.getItem('__ktane-solver__-module-' + d.modules[i].id);
+                        var newVersionExists = false;
+                        try {
+                            if (oldVersionsExist) {
+                                newVersionExists = d.modules[i].version > oldInfo.modules[i].version;
+                            }
+                        } catch (e) {
+                            newVersionExists = true;
+                        }
+                        if (!a || newVersionExists) {
+                            modGrab++;
+                            $.ajax({
+                                cache: false,
+                                url: 'modules/' + d.modules[i].id + '.js',
+                                success: a => {
+                                    localStorage.setItem('__ktane-solver__-module-' + d.modules[i].id, btoa(a));
+                                    modsGrabbed++;
+                                    checkUpdateStats();
+                                },
+                                error: () => {
+                                    if (!errorLoadingModule) {
+                                        errorLoadingModule = true;
+                                        moduleThatFailed = d.modules[i].id;
+                                    } else {
+                                        moduleThatFailed += " -- " + d.modules[i].id;
+                                    }
+                                }
+                            })
+                            $.getScript('modules/' + d.modules[i].id + '.js', d => {
+                                localStorage.setItem('ktane-solver-module-' + d.modules[i].id, btoa(d));
+                                console.log(`Module "${d.modules[i].name}" has been updated or installed`);
+                                modsGrabbed++;
+                                checkUpdateStats();
+                            })
+                        } else {
+                            console.log(`Module "${d.modules[i].name}" is already loaded`);
+                        }
+                    }
+                    modsAddedToGrab = true;
+                    checkUpdateStats();
+                })
+            } else {
+                $("body").html('Your browser doesn\'t support fancy features required to make this app work try updating or getting a new browser.');
+            }
+        })
+
+        function checkUpdateStats() {
+            $("#output-area").html(`Module Count: ${modCount}<br>
+                Modules to Update: ${modGrab}<br>
+                Modules completed updating: ${modsGrabbed}<br>
+                Error loading modules: ${errorLoadingModule}<br>
+                Module(s) that failed: ${moduleThatFailed}<br>`);
+            if (modsAddedToGrab && modGrab == modsGrabbed) {
+                alert("Restarting app soon");
+                setTimeout(()=>{
+                    window.location="app.html";
+                },5000);
+            }
+        }
+    </script>
+    <div id="output-area"></div>
+</body>
+
+</html>

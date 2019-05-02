@@ -4,10 +4,10 @@ Here is some documentation on how to create modules for KTaNE Solver. If you nee
 
 ### Module Info
 
-A simple JSON string surrounded by `//$$` and `$$` to give some information about the module.
+Add a JSON line to `meta.json` to give some information about the module.
 
 ```
-//$$ {"name":" <module name> ","alias":[ <array of command names> ],"help": <a description of the command> } $$
+{"name":" <module name> ","id":" <name of the module's script without .js> ","alias":[ <array of command names> ],"help": <a description of the command> }
 ```
 
 ### Arugments
@@ -40,7 +40,7 @@ bombinfo.indicators.isLit( <name> ); // returns boolean
 bombinfo.indicators.isUnlit( <name> ); // returns boolean
 
 // Ports
-bombinfo.portplates // returns an array of portplates
+bombinfo.portplates // returns an array of portplates (see below for more info)
 bombinfo.ports.<port name> // returns an integer of the number of ports
 bombinfo.ports.all // returns an integer
 // valid port names are "parallel", "dvid", "stereorca", "ps2", "rj45" and "serial"
@@ -88,16 +88,18 @@ Used to make the bot speak to the user.
 ktaneSpeak(<text>);
 ```
 
-### Test Harness
+### Testing
 
-Currently non-existent
+#### Windows
 
-### Rebuilding
+1. Make sure you have Python 3.7 installed
+2. Run the `server_windows.cmd` file
+3. Navigate to `http://localhost:8000/` in your browser
+4. To test a single module head on over to `http://localhost:8000`
 
-Run the python file to rebuild the compressed version of all the modules stored in `ktaneModules.js`.<br>
-This requires python and the requests library installed.<br>
-Install python from [here](https://www.python.org/downloads/).<br>
-Run this in a command line window in the python directory to install requests.<br>
-```
-python -m pip install requests
-```
+#### Linux
+
+1. If your distribution doesn't install python 3.7 by default, install it with your preferred package manager
+2. Run `./server_linux` from a terminal
+3. Navigate to `http://localhost:8000/` in your browser
+4. To test a single module head on over to `http://localhost:8000`

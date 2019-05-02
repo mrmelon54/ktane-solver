@@ -3,6 +3,8 @@ function KtaneSolver() {
     this.bombinfo = new KtaneBombInfo();
     this.bombinfo.displayBombInfo();
     this.runCommand = (t) => {
+        this.moduleList = ktaneModuleCommandInterface;
+        console.log(this.moduleList);
         t = t.toLowerCase();
         t = t.trim();
 		t = replaceWords(t, [ "in Decatur", "4th", "part", "wart", "bart", "fort" ], [ "indicator", "port", "port", "port", "port", "port" ]);
@@ -23,17 +25,17 @@ function KtaneSolver() {
                 }
             }
             ktaneSpeak(`Showing help text for ${helpName}`);
-            $("#output").html(helpText);
+            $("#display").html(`Showing help text for ${helpName}<br><br>`+helpText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
             return;
         }
         if (t.indexOf("batteries") == 0 || t.indexOf("battery") == 0) {
 			t = replaceWords(t, [ "to", "for" ], [ "2", "4" ]);
-			
+
 			for (var i = 0; i < 10; i++)
 				t = t.replace(ktaneNumberToWord(i), i.toString());
 
             var s = /[batteries|battery] (d|aa|holders) ?(\d+)/.exec(t);
-			
+
             try {
                 if (s[1] == "d") {
                     this.bombinfo.batteries.d = parseInt(s[2]);
@@ -42,7 +44,7 @@ function KtaneSolver() {
                 } else if (s[1] == "holders") {
                     this.bombinfo.batteries.holders = parseInt(s[2]);
                 }
-				
+
 				ktaneSpeak(`Battery ${s[1]} ${s[2]}`);
             } catch (e) {
                 ktaneSpeak("Invalid number of batteries");
@@ -88,15 +90,15 @@ function KtaneSolver() {
             return;
         } else if (t.indexOf("serial number") == 0) {
 			t = replaceWords(t, [ "serial number ", " to ", "tree", "for", "mic", "you", "-" ], [ "", "2", "3", "4", "mike", "u", "" ]);
-			
+
 			for (var i = 0; i < 10; i++) {
 				for (var j = 0; j < 6; j++) {
 					t = t.replace(ktaneNumberToWord(i), i.toString());
 				}
 			}
-			
+
             var s = t.split(" ");
-			
+
             this.bombinfo.serialnumber = {
                 whole: "",
                 letters: [],
@@ -115,7 +117,7 @@ function KtaneSolver() {
             this.bombinfo.displayBombInfo();
             ktaneSpeak(`Serial number is ${this.bombinfo.serialnumber.whole.split("").map(function (obj) {
 				if (isNaN(obj)) return ktaneLetterToNato(obj);
-				
+
 				return obj;
 			}).join(" ")}`);
 			return;
@@ -263,18 +265,18 @@ function ktaneWordToNumber(t) {
 
 function ktaneNumberToWord(n) {
 	var words = [ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" ];
-	
+
 	if (n < 0 || n > words.length) return null;
-	
+
 	return words[n];
 }
 
 function replaceWords(original, words, replacers) {
 	if (words.length <= 0 || replacers.length <= 0) return original;
-	
+
 	for (var i = 0; i < words.length; i++)
 		original = original.replace(words[i], replacers[i]);
-	
+
 	return original;
 }
 

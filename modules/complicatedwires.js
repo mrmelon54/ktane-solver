@@ -1,5 +1,3 @@
-//$$ {"name":"Complicated Wires","vanilla":true,"alias":["complicated wires"],"help":"complicated wires <colour>"} $$
-
 var colours=[];
 var hasStar=false;
 var hasLED=false;
