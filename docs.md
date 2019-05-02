@@ -101,3 +101,18 @@ Run this in a command line window in the python directory to install requests.<b
 ```
 python -m pip install requests
 ```
+
+### Running
+
+#### Windows
+
+1. Make sure you have Python 3.7 installed
+2. Run the server.cmd file
+3. Navigate to `http://localhost:8000/` in your browser
+
+#### Linux
+
+1. If your distribution doesn't install python 3.7 by default, install it with your preferred package manager
+2. Run `./server_linux` from a terminal
+3. Navigate to `http://localhost:8000/` in your browser
+
