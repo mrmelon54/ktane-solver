@@ -1,5 +1,3 @@
-//$$ {"name":"Simon Says","vanilla":true,"alias":["simon","simon says"],"help":"simon says <list of colours>"} $$
-
 var colours=[];
 for (var i = 0; i < args.length; i++) {
     if (['blue', 'red', 'green', 'yellow'].includes(args[i])) {

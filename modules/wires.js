@@ -1,5 +1,3 @@
-//$$ {"name":"Wires","vanilla":true,"alias":["wires","simple wires"],"help":"wires <list of colours>"} $$
-
 var colours=[];
 for (var i = 0; i < args.length; i++) {
     if (['blue','white','yellow','red','black'].includes(args[i])) {

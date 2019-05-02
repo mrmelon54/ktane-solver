@@ -1,5 +1,3 @@
-//$$ {"name":"Alphabet","alias":["alphabet"],"help":"alphabet <letters>"} $$
-
 function except(arr1, arr2) {
 	return arr1.filter(x => arr2.indexOf(x) == -1);
 }
@@ -14,13 +12,13 @@ for (var i = 0; i < args.length; i++)
 
 if (args.length !== 4) {
 	ktaneSpeak("I need four letters");
-	
+
 	return;
 }
 
 if (uniqueString(args.join("")).length !== 4) {
 	ktaneSpeak("I need four distinct letters");
-	
+
 	return;
 }
 
@@ -29,13 +27,13 @@ var letterCount = [];
 
 for (var i = 0; i < wordsList.length; i++) {
 	var countWord = "";
-	
+
 	for (var j = 0; j < wordsList[i].length; j++) {
 		if (!except(args, countWord.split("")).includes(wordsList[i][j])) break;
 
 		countWord += wordsList[i][j];
 	}
-	
+
 	letterCount.push(countWord.length);
 }
 
