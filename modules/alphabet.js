@@ -10,7 +10,7 @@ if (args.length !== 4) {
 }
 
 for (var i = 0; i < args.length; i++)
-	args[i] = args[i].length > 1 ? ktaneNatoToLetter(args[i]) : args[i];
+	args[i] = (args[i].length > 1) ? ktaneNatoToLetter(args[i]) : args[i];
 
 if (uniqueString(args.join("")).length !== 4) {
 	ktaneSpeak("I need four distinct letters");
