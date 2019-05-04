@@ -42,21 +42,42 @@ bombinfo.indicators.isUnlit( <name> ); // returns boolean
 
 // Ports
 bombinfo.portplates // returns an array of portplates (see below for more info)
-bombinfo.ports.<port name> // returns an integer of the number of ports
-bombinfo.ports.all // returns an integer
-// valid port names are "parallel", "dvid", "stereorca", "ps2", "rj45" and "serial"
+bombinfo.getPortsCount( <port name> ); // returns an integer of the number of ports
+bombinfo.getPortsCount(); // returns an integer of the number of all the ports
 ```
+
+__**Port Types**__
+* parallel
+* dvid
+* stereorca
+* serial
+* rj45
+* ps2
+* ac
+* componentvideo
+* hdmi
+* compositevideo
+* vga
+* usb
+* pcmcia
 
 __**Portplates List**__
 
-This returns an array (see below for example).<br>
-This has 2 portplates one with a Serial, Stereo RCA and PS/2 the other with just a Parallel
+This returns an array of KtanePortplate classes.
 
 ```
 [
-    {serial:true,stereorca:true,ps2:true,parallel:false,dvid:false,rj45:false},
-    {serial:false,stereorca:false,ps2:false,parallel:true,dvid:false,rj45:false}
+    KtanePortplate {getCount: <function>, getNames: <function>}
+    KtanePortplate {getCount: <function>, getNames: <function>}
 ]
+```
+
+These methods can be used with the KtanePortplate class.
+
+```
+portplate.getCount( <port type> ); // get an integer of the number of this port
+portplate.getCount(); // get an integer of the total number of ports
+portplate.getNames(); // get the names of the ports on the plate
 ```
 
 ### Display
@@ -96,7 +117,7 @@ ktaneSpeak(<text>);
 1. Make sure you have Python 3.7 installed
 2. Run the `server_windows.cmd` file
 3. Navigate to `http://localhost:8000/` in your browser
-4. To test a single module head on over to `http://localhost:8000`
+4. To test a single module head on over to `http://localhost:8000/single.html?testmodule=<module id>`
 5. Running `server_windows.cmd` may just quickly flash up a window if so ask on the Discord server about adding Python to the environment variables
 
 #### Linux
@@ -104,4 +125,4 @@ ktaneSpeak(<text>);
 1. If your distribution doesn't install python 3.7 by default, install it with your preferred package manager
 2. Run `./server_linux` from a terminal
 3. Navigate to `http://localhost:8000/` in your browser
-4. To test a single module head on over to `http://localhost:8000`
+4. To test a single module head on over to `http://localhost:8000/single.html?testmodule=<module id>`
