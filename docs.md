@@ -46,7 +46,7 @@ bombinfo.getPortsCount( <port name> ); // returns an integer of the number of po
 bombinfo.getPortsCount(); // returns an integer of the number of all the ports
 ```
 
-__**Port Types**__
+**Port Types**
 * parallel
 * dvid
 * stereorca
@@ -61,7 +61,7 @@ __**Port Types**__
 * usb
 * pcmcia
 
-__**Portplates List**__
+**Portplates List**
 
 This returns an array of KtanePortplate classes.
 

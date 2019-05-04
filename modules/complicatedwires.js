@@ -22,7 +22,7 @@ if(colours.length<=2&&colours.length>=1&&wireCount("blue")<=1&&wireCount("red")<
     var action=null;
     if(checkComb("0000/0001/0101",str))action="cut";
     else if(checkComb("0011/0110/0111",str))action=(bombinfo.batteries.d+bombinfo.batteries.aa>2)?"cut":"don't cut";
-    else if(checkComb("1010/1011/1101",str))action=(bombinfo.ports.parallel>=1)?"cut":"don't cut";
+    else if(checkComb("1010/1011/1101",str))action=(bombinfo.getPortsCount("parallel")>=1)?"cut":"don't cut";
     else if(checkComb("0100/1000/1100/1110",str))action=(bombinfo.serialnumber.numbers[bombinfo.serialnumber.numbers.length-1]%2==0)?"cut":"don't cut";
     else action="don't cut";
     ktaneSpeak(`${action} the wire`);

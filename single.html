@@ -1,5 +1,9 @@
 <html>
 
+<head>
+    <title>KTaNE Solver module tester</title>
+</head>
+
 <body>
     <div>
         <button id="start-record-button" style="width:50px;height:50px;">Listen</button>
@@ -8,7 +12,7 @@
         <button id="send-command-button" style="vertical-align:top;">Send Command</button>
     </div>
     <div id="speech-line" style="position:fixed;top:8px;left:420px;"></div>
-    <div style="width:260px;margin-top:8px;">
+    <div style="width:260px;position:fixed;margin-top:8px;top:60px;left:8px;height:calc(100vh - 76px);overflow:auto;">
         <div id="bombinfo"></div>
         <div id="nato-alphabet">
             <ul>
@@ -41,7 +45,7 @@
             </ul>
         </div>
     </div>
-    <div id="display" style="position: fixed;top: 28px;left: 260px;width: calc(100vw - 268px);height: calc(100vh - 36px);"></div>
+    <div id="display" style="position:fixed;top:36px;left:276px;width:calc(100vw - 284px);height:calc(100vh - 44px);z-index:1;"></div>
 
 
     <script src="jquery.js"></script>
@@ -57,6 +61,15 @@
         window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
         var recognition = new window.SpeechRecognition();
         $(document).ready(() => {
+            $("#display").css("z-index","2");
+            if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
+                alert("Testing only works when hosting locally");
+                return;
+            }
+            if (location.port !== "8000") {
+                alert("Testing only works when hosting locally");
+                return;
+            }
             if (testingId === null || testingId === "") {
                 alert("Module not set");
                 return;
