@@ -16,7 +16,7 @@ on/lit indicator <nato letters or the letters for the indicators name>
 off/unlit indicator <nato letters or the letters for the indicators name>
 remove indicator
 serial number <nato letters or numbers>
-port/portplate <port names (parallel/dvid/rj45/ps2/stereo/serial)>
+port/portplate <port names see below>
 remove port/portplate
 ```
 
@@ -28,6 +28,21 @@ This adds 2 portplates one with a Serial, Stereo RCA and PS/2 the other with jus
 port serial stereo ps2
 port parallel
 ```
+
+**Port Types**
+* parallel
+* dvid
+* stereorca
+* serial
+* rj45
+* ps2
+* ac
+* componentvideo
+* hdmi
+* compositevideo
+* vga
+* usb
+* pcmcia
 
 ### Help Command
 ```
