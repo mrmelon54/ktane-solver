@@ -94,18 +94,18 @@ if(args[0]==="screen"){
         right:"yes/nothing/ready/press/no/wait/what/right",
         sure:"you are/done/like/you're/you/hold/uh huh/ur/sure",
         u:"uh huh/sure/next/what?/you're/ur/uh uh/done/u",
-        "uh huh":"uh huh",
-        "uh uh":"ur/u/you are/you're/next/uh uh",
+        "uhhuh":"uh huh",
+        "uhuh":"ur/u/you are/you're/next/uh uh",
         uhhh:"ready/nothing/left/what/okay/yes/right/no/press/blank/uhhh",
         ur:"done/u/ur",
         wait:"uhhh/no/blank/okay/yes/left/first/press/what/wait",
         what:"uhhh/what",
         "what?":"you/hold/you're/your/u/done/uh uh/like/you are/uh huh/ur/next/what?",
         yes:"okay/right/uhhh/middle/first/what/press/ready/nothing/yes",
-        "you are":"your/next/like/uh huh/what?/done/uh uh/hold/you/u/you're/sure/ur/you are",
+        "youare":"your/next/like/uh huh/what?/done/uh uh/hold/you/u/you're/sure/ur/you are",
         you:"sure/you are/your/you're/next/uh huh/ur/hold/what?/you",
         your:"uh uh/you are/uh huh/your",
-        "you're":"you/you're"
+        "youre":"you/you're"
     };
     if(table[word]===undefined){
         ktaneSpeak(`Tell me the actual word`);
