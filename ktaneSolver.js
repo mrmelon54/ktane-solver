@@ -450,6 +450,7 @@ function KtanePortplate() {
 }
 window.ktaneSpeak = (t) => {
     console.log(`Saying: ${t}`);
+    $("#speech-output").text(t);
     var msg = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
     msg.voice = voices[2];
