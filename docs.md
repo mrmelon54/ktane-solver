@@ -100,7 +100,11 @@ ktaneWordToNumber( <word> ); // returns the number or null if it is an invalid w
 
 ### External Assets
 
-All assets must be stored in the assets folder in a subfolder with the same name as the script file without the `.js`. The path to the modules assets is send in a variable called `assetsPath`.
+All assets must be stored in the assets folder in a subfolder with the same name as the script file without the `.js`. The path to the modules assets is send in a variable called `assetsPath`.<br>
+Some assets can be put in the global assets which will load all the time. A list of the current global assets and their description can be found below.
+
+**Global Assets List**
+* EasyStarJS - A* maze solving algorithm
 
 ### Speaking
 
