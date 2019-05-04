@@ -104,7 +104,7 @@ All assets must be stored in the assets folder in a subfolder with the same name
 Some assets can be put in the global assets which will load all the time. A list of the current global assets and their description can be found below.
 
 **Global Assets List**
-* EasyStarJS - A* maze solving algorithm
+* EasyStarJS - A* maze solving algorithm (https://easystarjs.com)
 
 ### Speaking
 

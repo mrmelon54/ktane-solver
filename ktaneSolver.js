@@ -24,7 +24,7 @@ function KtaneSolver() {
                 }
             }
             ktaneSpeak(`Showing help text for ${helpName}`);
-            $("#display").html(`Showing help text for ${helpName}<br><br>` + helpText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+            $("#display").html(`Showing help text for ${helpName}<br><br>` + helpText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\\&lt;/g,'<').replace(/\\&gt;/g,'>'));
             return;
         }
         if (t.indexOf("batteries") == 0 || t.indexOf("battery") == 0) {
