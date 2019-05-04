@@ -189,6 +189,23 @@ algorithm.findPath(playerPos.x * 2 - 1, playerPos.y * 2 - 1, targetPos.x * 2 - 1
         };
         lastPos = d[i];
     }
-    ktaneSpeak(`The path is: ${p.join(", ")}`);
+    var a = [];
+    var l = "";
+    var c = 0;
+    for (var i = 0; i < p.length; i++) {
+        if (l == "") {
+            l = p[i];
+            c = 1;
+        } else if (p[i] !== l) {
+            a.push([l, c]);
+            l = p[i];
+            c = 1;
+        } else {
+            c++;
+        }
+    }
+    a.push([l,c]);
+    var b=a.map(d=>d[1]===1?d[0]:`${d[0]} ${d[1]} times`);
+    ktaneSpeak(`The path is: ${b.join(", ")}`);
 });
 algorithm.calculate();

@@ -10,7 +10,10 @@ function KtaneSolver() {
         var cmd = "";
         var moduleTag = "";
         var action = null;
-        if (t.indexOf("help") == 0) {
+        if(t.indexOf("stop")==0) {
+            speechSynthesis.cancel();
+            return;
+        } else if (t.indexOf("help") == 0) {
             var s = t.replace('help', '').trim();
             var helpText = "";
             var helpName = "";
@@ -264,11 +267,7 @@ function ktaneWordToNumber(t) {
 }
 
 function ktaneNumberToWord(n) {
-    var words = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-
-    if (n < 0 || n > words.length) return null;
-
-    return words[n];
+    return n;
 }
 
 function replaceWords(original, words, replacers) {
@@ -453,7 +452,7 @@ window.ktaneSpeak = (t) => {
     $("#speech-output").text(t);
     var msg = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
-    msg.voice = voices[2];
+    msg.voice = voices[0];
     msg.lang = "en-US";
     msg.text = t;
     speechSynthesis.speak(msg);
