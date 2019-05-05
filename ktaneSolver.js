@@ -261,7 +261,7 @@ function ktaneWordToNumber(t) {
     try {
         return convertor[t].toString();
     } catch (e) {
-        if (isNAN(parseInt(t))) return null;
+        if (isNaN(parseInt(t))) return null;
         return t;
     }
 }
