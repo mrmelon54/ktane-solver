@@ -31,7 +31,7 @@ for (var i = 0; i < serialChars.length; i++) {
 }
 
 if (hasRY) serialChars = serialChars.map(x => x + bombinfo.batteries.all);
-if (fxfAmount > 0) serialChars = serialChars.map(x => Math.abs(x - Math.abs(fxfAmount - bombinfo.ports.all)));
+if (fxfAmount > 0) serialChars = serialChars.map(x => Math.abs(x - Math.abs(fxfAmount - bombinfo.getPortsCount())));
 if (hasSquare) serialChars = serialChars.map(x => x * (bombinfo.batteries.holders + bombinfo.portplates.length));
 
 serialChars = serialChars.map(x => x % 10);

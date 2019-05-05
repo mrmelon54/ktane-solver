@@ -6,7 +6,7 @@ function KtaneSolver() {
         this.moduleList = ktaneModuleCommandInterface;
         t = t.toLowerCase();
         t = t.trim();
-        t = replaceWords(t, ["in Decatur", "4th", "part", "wart", "bart", "fort"], ["indicator", "port", "port", "port", "port", "port"]);
+        t = replaceWords(t, ["in Decatur", "4th", "part", "wart", "bart", "fort", "modular"], ["indicator", "port", "port", "port", "port", "port", "modulo"]);
         var cmd = "";
         var moduleTag = "";
         var action = null;
@@ -91,7 +91,7 @@ function KtaneSolver() {
             ktaneSpeak(`Removed last indicator`);
             return;
         } else if (t.indexOf("serial number") == 0) {
-            t = replaceWords(t, ["serial number ", " to ", "tree", "for", "mic", "you", "-"], ["", "2", "3", "4", "mike", "u", ""]);
+            t = replaceWords(t, ["serial number ", " to ", "tree", "for", "mic", "you", "-", "syrup", "cereal"], ["", "2", "3", "4", "mike", "u", "", "0", "0"]);
 
             for (var i = 0; i < 10; i++) {
                 for (var j = 0; j < 6; j++) {
@@ -267,7 +267,11 @@ function ktaneWordToNumber(t) {
 }
 
 function ktaneNumberToWord(n) {
-    return n;
+    var words = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+
+    if (n < 0 || n >= words.length) return null;
+
+    return words[n];
 }
 
 function replaceWords(original, words, replacers) {

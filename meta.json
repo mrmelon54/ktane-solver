@@ -1,13 +1,14 @@
 {
     "modules": [
-        {"name": "Alphabet","id":"alphabet","alias": ["alphabet"],"help": "alphabet <letters>","version":2},
-        {"name": "Colorful Madness","id":"colorfulmadness","alias": ["colorful madness"],"help": "colorful madness <has red-yellow> <letters>","version":1},
+        {"name":"Alphabet","id":"alphabet","alias":["alphabet"],"help":"alphabet <letters>","version":2},
+        {"name":"Colorful Madness","id":"colorfulmadness","alias":["colorful madness"],"help":"colorful madness <has red-yellow> <amount of 4x4 checkerboards> <has square-on-square>","version":1},
         {"name":"Complicated Wires","id":"complicatedwires","vanilla":true,"alias":["complicated wires"],"help":"complicated wires <colour>","version":1},
         {"name":"Keypad","id":"keypad","vanilla":true,"alias":["keypad"],"help":"keypad <symbol names>/list","version":2},
         {"name":"Simon Says","id":"simonsays","vanilla":true,"alias":["simon","simon says"],"help":"simon says <list of colours>","version":1},
         {"name":"The Button","id":"thebutton","vanilla":true,"alias":["button"],"help":"button <colour> <word>","version":1},
         {"name":"Wires","id":"wires","vanilla":true,"alias":["wires","simple wires"],"help":"wires <list of colours>","version":1},
         {"name":"Mazes","id":"mazes","vanilla":true,"alias":["mazes","maze"],"help":"mazes <maze id> player <position> target <position>\\<br\\>The maze ID is the X positions of the indicators (e.g. the top left maze in the manual is 11).\\<br\\>Top left is 11. First number is X direction second number is the Y direction","version":2},
-        {"name":"Who's on First","id":"whosonfirst","vanilla":"true","alias":["who's on first","whos on first"],"help":"who's on first screen/button <spell out the word>\\<br\\>Screen: the word on the screen\\<br\\>Button: the word on the button found by the word on the screen","version":1}
+        {"name":"Who's on First","id":"whosonfirst","vanilla":"true","alias":["who's on first","whos on first"],"help":"who's on first screen/button <spell out the word>\\<br\\>Screen: the word on the screen\\<br\\>Button: the word on the button found by the word on the screen","version":1},
+        {"name":"Modulo","id":"modulo","alias":["modulo"],"help":"modulo <red number> <green number>","version":2}
     ]
 }
