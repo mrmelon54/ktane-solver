@@ -64,6 +64,7 @@ if(args[0]==="screen"){
         c:'tr',
         cee:'br'
     };
+    word=word.replace('you are','youare').replace('you\'re','youre').replace('they\'re','theyre').replace('they are','theyare').replace('hold on','holdon');
     if(table[word]===undefined){
         ktaneSpeak(`Tell me the actual word`);
         return;
@@ -107,6 +108,7 @@ if(args[0]==="screen"){
         your:"uh uh/you are/uh huh/your",
         "youre":"you/you're"
     };
+    word=word.replace('you are','youare').replace('you\'re','youre').replace('uh huh','uhhuh').replace('uh uh','uhuh').replace('what question mark','what?').replace('what no question mark','what');
     if(table[word]===undefined){
         ktaneSpeak(`Tell me the actual word`);
         return;
