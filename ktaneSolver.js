@@ -10,7 +10,7 @@ function KtaneSolver() {
         var cmd = "";
         var moduleTag = "";
         var action = null;
-        if(t.indexOf("stop")==0) {
+        if (t.indexOf("stop") == 0) {
             speechSynthesis.cancel();
             return;
         } else if (t.indexOf("help") == 0) {
@@ -27,10 +27,40 @@ function KtaneSolver() {
                 }
             }
             ktaneSpeak(`Showing help text for ${helpName}`);
-            $("#display").html(`Showing help text for ${helpName}<br><br>` + helpText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\\&lt;/g,'<').replace(/\\&gt;/g,'>'));
+            $("#display").html(`Showing help text for ${helpName}<br><br>` + helpText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\\&lt;/g, '<').replace(/\\&gt;/g, '>'));
             return;
         }
-        if (t.indexOf("batteries") == 0 || t.indexOf("battery") == 0) {
+        if (t.indexOf("total modules") == 0) {
+            t = replaceWords(t, ["to", "for"], ["2", "4"]);
+            var s = /[total modules] ?(\d+)/.exec(t);
+            try {
+                this.bombinfo.moduleCount.total = parseInt(s[1]);
+                this.bombinfo.recalculateModuleCounts();
+                ktaneSpeak(`${s[1]} module${parseInt(s[1])==1?"":"s"} in total`);
+            } catch (e) {
+                ktaneSpeak("Invalid number of modules");
+            }
+        } else if (t.indexOf("solved modules") == 0) {
+            t = replaceWords(t, ["to", "for"], ["2", "4"]);
+            var s = /[solved modules] ?(\d+)/.exec(t);
+            try {
+                this.bombinfo.moduleCount.solved = parseInt(s[1]);
+                this.bombinfo.recalculateModuleCounts();
+                ktaneSpeak(`${s[1]} solved module${parseInt(s[1])==1?"":"s"}`);
+            } catch (e) {
+                ktaneSpeak("Invalid number of modules");
+            }
+        } else if (t.indexOf("needy modules") == 0) {
+            t = replaceWords(t, ["to", "for"], ["2", "4"]);
+            var s = /[needy modules] ?(\d+)/.exec(t);
+            try {
+                this.bombinfo.moduleCount.unsolved = parseInt(s[1]);
+                this.bombinfo.recalculateModuleCounts();
+                ktaneSpeak(`${s[1]} needy module${parseInt(s[1])==1?"":"s"}`);
+            } catch (e) {
+                ktaneSpeak("Invalid number of modules");
+            }
+        } else if (t.indexOf("batteries") == 0 || t.indexOf("battery") == 0) {
             t = replaceWords(t, ["to", "for"], ["2", "4"]);
 
             for (var i = 0; i < 10; i++)
@@ -133,8 +163,8 @@ function KtaneSolver() {
             if (s.some(x => ["rj45", "rj", "45"].includes(x))) p.push("rj45");
             if (s.some(x => ["serial", "cereal"].includes(x))) p.push("serial");
             if (s.some(x => ["ac", "power"].includes(x))) p.push("ac");
-            if (s.some(x => ["component","componentvideo"].includes(x))) p.push("componentvideo");
-            if (s.some(x => ["composite","compositevideo"].includes(x))) p.push("compositevideo");
+            if (s.some(x => ["component", "componentvideo"].includes(x))) p.push("componentvideo");
+            if (s.some(x => ["composite", "compositevideo"].includes(x))) p.push("compositevideo");
             if (s.some(x => ["hdmi"].includes(x))) p.push("hdmi");
             if (s.some(x => ["vga"].includes(x))) p.push("vga");
             if (s.some(x => ["usb"].includes(x))) p.push("usb");
@@ -275,12 +305,16 @@ function ktaneNumberToWord(n) {
 }
 
 function replaceWords(original, words, replacers) {
-    if (words.length <= 0 || replacers.length <= 0) return original;
+    if (words.length <= 0 || replacers.length <= 0 || replacers.length !== words.length) return original;
 
     for (var i = 0; i < words.length; i++)
-        original = original.replace(words[i], replacers[i]);
+        original = replaceAll(original, words[i], replacers[i]);
 
     return original;
+}
+
+function replaceAll(original, word, replacer) {
+    return original.split(word).join(replacer);
 }
 
 function KtaneBombInfo() {
@@ -296,6 +330,12 @@ function KtaneBombInfo() {
         holders: 0,
         all: 0
     };
+    this.moduleCount={
+        total:0,
+        solved:0,
+        needy:0,
+        unsolved:0
+    }
     this.indicatorList = [];
     this.indicators = {
         exists: (t) => {
@@ -365,6 +405,9 @@ function KtaneBombInfo() {
     this.recalculateBatteries = () => {
         this.batteries.all = this.batteries.d + this.batteries.aa;
     }
+    this.recalculateModuleCounts=()=>{
+        this.moduleCount.unsolved=this.moduleCount.total-(this.moduleCount.solved+this.moduleCount.needy);
+    }
     this.displayBombInfo = () => {
         var indicatorsHTML = '<ul>';
         for (var i = 0; i < this.indicatorList.length; i++) {
@@ -397,6 +440,14 @@ function KtaneBombInfo() {
         portsCountHTML += '<li>Total: ' + this.getPortsCount() + '</li>';
         portsCountHTML += '</ul>';
         $("#bombinfo").html(`<div>Serial Number: ${this.serialnumber.whole}</div>
+        <div>Module Counts:
+            <ul>
+                <li>Total: ${this.moduleCount.total}</li>
+                <li>Solved: ${this.moduleCount.solved}</li>
+                <li>Unsolved: ${this.moduleCount.unsolved}</li>
+                <li>Needy: ${this.moduleCount.needy}</li>
+            </ul>
+        </div>
         <div>Serial Number Letters: ${this.serialnumber.letters}</div>
         <div>Serial Number Numbers: ${this.serialnumber.numbers}</div>
         <div>Batteries:

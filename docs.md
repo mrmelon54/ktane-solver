@@ -30,9 +30,9 @@ bombinfo.serialnumber.numbers // e.g. [1,2,8] <-- The numbers are returned as in
 bombinfo.strikes // returns an integer
 
 // Batteries
-bombinfo.batteries.<battery name>  // returns an integer
-bombinfo.batteries.holders // returns an integer
-bombinfo.batteries.all // returns an integer
+bombinfo.batteries.<battery name>  // an integer
+bombinfo.batteries.holders // an integer
+bombinfo.batteries.all // an integer
 // valid battery names are "aa" and "d"
 
 // Indicators
@@ -41,9 +41,15 @@ bombinfo.indicators.isLit( <name> ); // returns boolean
 bombinfo.indicators.isUnlit( <name> ); // returns boolean
 
 // Ports
-bombinfo.portplates // returns an array of portplates (see below for more info)
+bombinfo.portplates // an array of portplates (see below for more info)
 bombinfo.getPortsCount( <port name> ); // returns an integer of the number of ports
 bombinfo.getPortsCount(); // returns an integer of the number of all the ports
+
+// Module Counts
+bombinfo.moduleCount.total // an integer of the total number of modules (including needies)
+bombinfo.moduleCount.solved // an integer of solved modules
+bombinfo.moduleCount.unsolved // an integer of unsolved modules (disincluding needies)
+bombinfo.moduleCount.needy // an integer of the number of needies
 ```
 
 **Port Types**

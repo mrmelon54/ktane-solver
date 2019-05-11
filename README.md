@@ -18,6 +18,9 @@ remove indicator
 serial number <nato letters or numbers>
 port/portplate <port names see below>
 remove port/portplate
+total modules <number> // this includes needy modules
+solved modules <number>
+needy modules <number>
 ```
 
 The port command adds a whole portplate with those ports on it (see example below).<br>
