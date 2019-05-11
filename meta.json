@@ -9,6 +9,7 @@
         {"name":"Wires","id":"wires","vanilla":true,"alias":["wires","simple wires"],"help":"wires <list of colours>","version":1},
         {"name":"Mazes","id":"mazes","vanilla":true,"alias":["mazes","maze"],"help":"mazes <maze id> player <position> target <position>\\<br\\>The maze ID is the X positions of the indicators (e.g. the top left maze in the manual is 11).\\<br\\>Top left is 11. First number is X direction second number is the Y direction","version":2},
         {"name":"Who's on First","id":"whosonfirst","vanilla":"true","alias":["who's on first","whos on first"],"help":"who's on first screen/button <spell out the word>\\<br\\>Screen: the word on the screen\\<br\\>Button: the word on the button found by the word on the screen","version":1},
-        {"name":"Modulo","id":"modulo","alias":["modulo"],"help":"modulo <red number> <green number>","version":2}
+        {"name":"Modulo","id":"modulo","alias":["modulo"],"help":"modulo <red number> <green number>","version":2},
+        {"name":"Ten-Button Color Code","id":"tenbuttoncolorcode","alias":["ten button color code","ten button","ten button color","ten button code","10 button color code","10 button","10 button color","10 button code"],"help":"ten-button color code <stage> <colors in reading order>","version":1}
     ]
 }
