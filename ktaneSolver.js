@@ -330,28 +330,31 @@ function KtaneBombInfo() {
         holders: 0,
         all: 0
     };
-    this.moduleCount={
-        total:0,
-        solved:0,
-        needy:0,
-        unsolved:0
+    this.moduleCount = {
+        total: 0,
+        solved: 0,
+        needy: 0,
+        unsolved: 0
     }
     this.indicatorList = [];
     this.indicators = {
         exists: t => {
-            return this.indicators.isLit(t)||this.indicators.isUnlit(t);
+            return this.indicators.isLit(t) || this.indicators.isUnlit(t);
         },
         isLit: t => {
             return this.indicatorList.includes("*" + t.toLowerCase());
         },
-        isUnlit:t => {
+        isUnlit: t => {
             return this.indicatorList.includes(" " + t.toLowerCase());
         },
-        getLit: ()=>{
-            return this.indicatorList.map(a=>a.indexOf("*")==0);
+        getLit: () => {
+            return this.indicatorList.map(a => a.indexOf("*") == 0);
         },
-        getUnlit: ()=>{
-            return this.indicatorList.map(a=>a.indexOf(" ")==0);
+        getUnlit: () => {
+            return this.indicatorList.map(a => a.indexOf(" ") == 0);
+        },
+        getTotal: () => {
+            return this.indicatorList.length;
         }
     }
     this.portplates = [];
@@ -408,8 +411,8 @@ function KtaneBombInfo() {
     this.recalculateBatteries = () => {
         this.batteries.all = this.batteries.d + this.batteries.aa;
     }
-    this.recalculateModuleCounts=()=>{
-        this.moduleCount.unsolved=this.moduleCount.total-(this.moduleCount.solved+this.moduleCount.needy);
+    this.recalculateModuleCounts = () => {
+        this.moduleCount.unsolved = this.moduleCount.total - (this.moduleCount.solved + this.moduleCount.needy);
     }
     this.displayBombInfo = () => {
         var indicatorsHTML = '<ul>';
