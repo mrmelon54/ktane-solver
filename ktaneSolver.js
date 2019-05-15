@@ -338,17 +338,20 @@ function KtaneBombInfo() {
     }
     this.indicatorList = [];
     this.indicators = {
-        exists: (t) => {
-            t = t.toLowerCase()
-            return this.indicators.isLit(t) || this.indicators.isUnlit(t);
+        exists: t => {
+            return this.indicators.isLit(t)||this.indicators.isUnlit(t);
         },
-        isLit: (t) => {
-            t = t.toLowerCase()
-            return this.indicatorList.includes("*" + t);
+        isLit: t => {
+            return this.indicatorList.includes("*" + t.toLowerCase());
         },
-        isUnlit: (t) => {
-            t = t.toLowerCase()
-            return this.indicatorList.includes(" " + t);
+        isUnlit:t => {
+            return this.indicatorList.includes(" " + t.toLowerCase());
+        },
+        getLit: ()=>{
+            return this.indicatorList.map(a=>a.indexOf("*")==0);
+        },
+        getUnlit: ()=>{
+            return this.indicatorList.map(a=>a.indexOf(" ")==0);
         }
     }
     this.portplates = [];

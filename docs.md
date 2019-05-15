@@ -39,6 +39,8 @@ bombinfo.batteries.all // an integer
 bombinfo.indicators.exists( <name> ); // returns boolean equivalent to is lit or unlit
 bombinfo.indicators.isLit( <name> ); // returns boolean
 bombinfo.indicators.isUnlit( <name> ); // returns boolean
+bombinfo.indicators.getLit(); // returns array of lit indicators
+bombinfo.indicators.getUnlit(); // returns array of unlit indicators
 
 // Ports
 bombinfo.portplates // an array of portplates (see below for more info)
