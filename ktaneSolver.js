@@ -226,14 +226,14 @@ function KtaneSolver() {
 
 function ktaneNatoToLetter(t) {
     t = replaceWords(t, ["clara", "ecco", "joliet", "xray", "sulu"], ["sierra", "echo", "juliet", "x-ray", "zulu"]);
-    if (!"alpha;bravo;charlie;delta;echo;foxtrot;golf;hotel;india;juliet;kilo;lima;mike;november;oscar;papa;quebec;romeo;sierra;tango;uniform;victor;whiskey;x-ray;yankee;zulu".split(';').includes(t)) return null;
+    if (!"alfa;alpha;bravo;charlie;delta;echo;foxtrot;golf;hotel;india;juliet;kilo;lima;mike;november;oscar;papa;quebec;romeo;sierra;tango;uniform;victor;whiskey;x-ray;yankee;zulu".split(';').includes(t)) return null;
     return t[0];
 }
 
 function ktaneLetterToNato(t) {
     if (t.length !== 1) return null;
     var convertor = {
-        a: "alpha",
+        a: "alfa",
         b: "bravo",
         c: "charlie",
         d: "delta",
