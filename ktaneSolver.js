@@ -1,7 +1,27 @@
+function KtaneGlobalStorage() {
+    this.storage={};
+    this.get=moduleId=>{
+        return new KtaneLocalStorage(this.storage[moduleId]||{});
+    }
+    this.setReturnedValue=(moduleId,c)=>{
+        this.storage[moduleId]=c.storage;
+    }
+}
+function KtaneLocalStorage(s) {
+    this.storage=s;
+    this.get=n=>{
+        return this.storage[n];
+    }
+    this.set=(n,c)=>{
+        this.storage[n]=c;
+    }
+}
+
 function KtaneSolver() {
     this.moduleList = ktaneModuleCommandInterface;
     this.bombinfo = new KtaneBombInfo();
     this.bombinfo.displayBombInfo();
+    this.globalStorage=new KtaneGlobalStorage();
     this.runCommand = (t) => {
         this.moduleList = ktaneModuleCommandInterface;
         t = t.toLowerCase();
@@ -214,7 +234,7 @@ function KtaneSolver() {
         var s = t.split(cmd + " ");
         s.splice(0, 1);
         var a = s.join("");
-        action(this.bombinfo, $("#display"), `assets/${moduleTag}/`, a.split(" "));
+        this.globalStorage.setReturnedValue(moduleTag,action(this.bombinfo, $("#display"), `assets/${moduleTag}/`, a.split(" "),this.globalStorage.get(moduleTag)));
     }
     this.toLetter = (t) => {
         return ktaneNatoToLetter(t);
