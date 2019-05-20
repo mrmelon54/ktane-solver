@@ -6,7 +6,7 @@ A robot to help you solve bombs in Keep Talking and Nobody Explodes by being and
 <br>
 [Go here for the developer documentation](https://mrmelon54.github.io/ktane-solver/docs.html)
 <br>
-[Discord server](https://discord.gg/QfVWhE5)
+[Discord server](https://discord.gg/usbmdrJ)
 
 ### Edgework Commands
 ```

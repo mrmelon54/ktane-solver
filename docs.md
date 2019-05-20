@@ -130,6 +130,15 @@ Used to make the bot speak to the user.
 ktaneSpeak(<text>);
 ```
 
+### Global Storage
+
+Storage data for your module for use when the next command is run.
+
+```
+globalStorage.get( <name> ); // returns data item or undefined
+globalStorage.set( <name> , <data to save> ); // saves data item
+```
+
 ### Testing
 
 #### Windows
