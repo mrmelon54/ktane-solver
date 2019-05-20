@@ -102,7 +102,7 @@
                         theitem.script = "%%$$%%";
                         finalModulesImportScript += '"' + theitem.id + '":';
                         var script = btoa(s);
-                        finalModulesImportScript += JSON.stringify(theitem).replace('"%%$$%%"', '(bombinfo,displayElement,assetsPath,args)=>{' + atob(script) + '}');
+                        finalModulesImportScript += JSON.stringify(theitem).replace('"%%$$%%"', '(bombinfo,displayElement,assetsPath,args,globalStorage)=>{' + atob(script) + 'return;}'.replace(/return;/g,'return globalStorage;'));
                         $("body").append(`<script>var ktaneModuleCommandInterface={${finalModulesImportScript}}<\/script>`);
                         ktaneSolver = new KtaneSolver();
                         recognition.interimResults = true;
