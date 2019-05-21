@@ -116,10 +116,13 @@ Some assets can be put in the global assets which will load all the time. A list
 * EasyStarJS - A* maze solving algorithm (https://easystarjs.com)
 * Playfair - Encrypting/decrypting playfair ciphers
 ```
-var playfair = new PlayfairCipher();
-playfair.encrypt(key, data);
-playfair.decrypt(key, data);
-playfair.getMatrix(key);
+playfair.encrypt(key, data); // encrypts data using the key
+playfair.decrypt(key, data); // decrypts data using the key
+playfair.getMatrix(key); // gets a matrix for the playfair
+```
+* Caesar - Caesar ciphers
+```
+caesar.cipher(offset, data) // ciphers data by offset
 ```
 
 ### Speaking
