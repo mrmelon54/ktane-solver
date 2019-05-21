@@ -117,7 +117,7 @@ Some assets can be put in the global assets which will load all the time. A list
 * Playfair - Encrypting/decrypting playfair ciphers
 ```
 playfair.encrypt(key, data); // encrypts data using the key
-playfair.decrypt(key, data, (optional) handle); // decrypts data using the key. handle can either be true to drop all X, false to do nothing or a function with one argument to process it on your own. Return value is used.
+playfair.decrypt(key, data, (optional) handle); // decrypts data using the key. handle can either be true to drop all X, false to do nothing or a function with one argument to process it on your own. Return value is used. Default is true.
 playfair.getMatrix(key); // gets a matrix for the playfair
 ```
 * Caesar - Caesar ciphers
