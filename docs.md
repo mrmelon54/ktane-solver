@@ -122,7 +122,7 @@ playfair.getMatrix(key); // gets a matrix for the playfair
 ```
 * Caesar - Caesar ciphers
 ```
-caesar.cipher(offset, data) // ciphers data by offset
+caesar.cipher(offset, data); // ciphers data by offset use a minus to reverse the cipher
 ```
 
 ### Speaking
