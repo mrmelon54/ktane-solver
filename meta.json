@@ -132,6 +132,20 @@
             "alias": ["knobs", "knob"],
             "help": "knobs <positions where a double light is (first/second/third/fourth/fifth/sixth)>",
             "version": 1
+        },
+        {
+            "name": "Unfair Cipher",
+            "id": "unfaircipher",
+            "alias": ["unfair cipher"],
+            "help": "unfair cipher <module id> <strikes> <display>\nYou will hear one step. To continue, run unfair cipher again without any arguments.",
+            "version": 1
+        },
+        {
+            "name": "Playfair Cipher",
+            "id": "playfaircipher",
+            "alias": ["playfair", "playfair cipher"],
+            "help": "playfair <colour> <display>",
+            "version": 1
         }
     ]
 }
