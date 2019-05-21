@@ -112,7 +112,7 @@
                         theitem.script = "%%$$%%";
                         finalModulesImportScript += '"' + theitem.id + '":';
                         var script = localStorage.getItem('__ktane-solver__-module-' + theitem.id);
-                        finalModulesImportScript += JSON.stringify(theitem).replace('"%%$$%%"', '(bombinfo,displayElement,assetsPath,args,globalStorage)=>{' + atob(script) + 'return;}'.replace(/return;/g,'return globalStorage;'));
+                        finalModulesImportScript += JSON.stringify(theitem).replace('"%%$$%%"', ('(bombinfo,displayElement,assetsPath,args,globalStorage)=>{' + atob(script) + 'return;}').replace(/return;/g,'return globalStorage;'));
                         if (i !== oldMetaData.modules.length - 1) finalModulesImportScript += ',';
                     }
                     $("body").append(`<script>var ktaneModuleCommandInterface={${finalModulesImportScript}}<\/script>`);
