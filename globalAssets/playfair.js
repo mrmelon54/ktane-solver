@@ -1,4 +1,4 @@
-var alphabet = ["A","B","C","D","E","F","G","H","I","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+var alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ".split("");
 
 playfair = {};
 
@@ -58,7 +58,7 @@ playfair.encrypt = function(key, data) {
     data = data.replace(/[^a-z]/gi, "").replace(/j/gi, "I");
 
     var dataSplit = data.match(/.{1,2}/g);
-    dataSplit.forEach((value, index, array) => { 
+    dataSplit.forEach((value, index, array) => {
         if (value[0] == value[1]) { // duplicate
             value = value[0] + "X";
         } else if (value.length < 2) { // single
@@ -112,17 +112,13 @@ playfair.decrypt = function(key, data) {
     var matrix = playfair.getMatrix(key);
     data = data.replace(/[^a-z]/gi, "").replace(/j/gi, "I");
 
-    console.log(matrix);
-
     var dataSplit = data.match(/.{1,2}/g);
-    dataSplit.forEach((value, index, array) => { 
+    dataSplit.forEach((value, index, array) => {
         if (value[0] == value[1]) { // duplicate
             value = value[0] + "X";
         } else if (value.length < 2) { // single
             value = value[0] + "X";
         }
-
-        console.log(value);
 
         var direction = playfair.getDirection(matrix, value[0], value[1]);
         var pos1 = playfair.findInMatrix(matrix, value[0]);
