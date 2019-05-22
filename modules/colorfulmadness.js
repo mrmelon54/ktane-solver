@@ -1,6 +1,5 @@
 if (args.length != 3) {
 	ktaneSpeak("Not enough information");
-
 	return;
 }
 
@@ -12,7 +11,6 @@ if (args[1].length > 1) {
 
 	if (args[1] === null || isNaN(args[1])) {
 		ktaneSpeak("Invalid amount");
-
 		return;
 	}
 }

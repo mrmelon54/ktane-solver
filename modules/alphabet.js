@@ -5,7 +5,6 @@ if (args.length === 1) args = args[0].split("");
 
 if (args.length !== 4) {
 	ktaneSpeak("I need four letters");
-
 	return;
 }
 
@@ -14,7 +13,6 @@ for (var i = 0; i < args.length; i++)
 
 if (uniqueString(args.join("")).length !== 4) {
 	ktaneSpeak("I need four distinct letters");
-
 	return;
 }
 

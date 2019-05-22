@@ -2,7 +2,6 @@ args = replaceWords(args.join(", "), [ ":", "/", "for", "08", "150, 7-", "0, to,
 
 if (args.length !== 2 || args.some(x => ktaneWordToNumber(x) === null)) {
     ktaneSpeak("Two numbers are required");
-
     return;
 }
 

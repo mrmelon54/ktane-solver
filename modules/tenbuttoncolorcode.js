@@ -1,6 +1,5 @@
 if (args.length !== 11) {
     ktaneSpeak("You need to give me the current stage and the colors");
-
     return;
 }
 
@@ -10,7 +9,6 @@ if (args[0].length > 1) args[0] = ktaneWordToNumber(args[0]);
 
 if (![ "1", "2" ].includes(args[0])) {
     ktaneSpeak("Not a valid stage");
-
     return;
 }
 
@@ -20,7 +18,6 @@ var colorInitials = [ "r", "g", "b" ];
 
 if (args.some(x => !colorInitials.includes(x))) {
     ktaneSpeak("Colors are not valid");
-
     return;
 }
 
@@ -81,7 +78,7 @@ function getRules(rule) {
             for (var i = 0; i < 3; i++) {
                 if (topRow.filter(x => x == i).length >= 3) {
                     for (var j = 0; j < 5; j++) {
-                        if (colors[j] == i) 
+                        if (colors[j] == i)
                             setColor(j, pressed++);
 
                         if (pressed > 2) break;
