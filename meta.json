@@ -146,6 +146,13 @@
             "alias": ["playfair", "playfair cipher"],
             "help": "playfair <colour> <display>",
             "version": 1
+        },
+        {
+            "name": "Caesar Cipher",
+            "id": "caesarcipher",
+            "alias": ["caesar cipher", "caesar"],
+            "help": "caesar <display>",
+            "version": 1
         }
     ]
 }
