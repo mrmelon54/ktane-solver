@@ -137,7 +137,7 @@
             "name": "Unfair Cipher",
             "id": "unfaircipher",
             "alias": ["unfair cipher"],
-            "help": "unfair cipher <module id> <strikes> <display>\nYou will hear one step. To continue, run unfair cipher again without any arguments.",
+            "help": "unfair cipher <module id> <strikes> <display>\nYou will hear one step. To continue,\nunfair cipher <next/repeat/previous> [step]",
             "version": 1
         },
         {
