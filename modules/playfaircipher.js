@@ -20,13 +20,12 @@ var colours = {
     yellow: "yellow"
 }
 
-console.log(args);
-
 var colour = colours.magenta;
 var display = args[1];
 
 switch (args[0]) {
     case "magenta":
+    case "pink":
         colour = colours.magenta;
         break;
     case "blue":
@@ -58,8 +57,6 @@ var keyA = "";
 var keyB = "";
 var keyC = "";
 
-// bombinfo.indicators.exists( <name> ); // returns boolean equivalent to is lit or unlit
-// bombinfo.indicators.isLit( <name> ); // returns boolean
 if (bombinfo.indicators.exists("bob") && bombinfo.indicators.isLit("bob")) {
     switch(date.getDay()) {
         case 0:
@@ -169,25 +166,18 @@ if (bombinfo.getPortsCount("serial") > 0 && bombinfo.getPortsCount("parallel") >
 
 var serialLetters = bombinfo.serialnumber.letters;
 var hasVowel = false;
-console.log(serialLetters);
-console.log(serialLetters.length);
 for (var i = 0; i < serialLetters.length; i++) {
-    console.log(i);
     var letter = serialLetters[i];
-    console.log(letter);
     if ("AEIOU".includes(letter.toUpperCase())) {
-        console.log("has vowel");
         hasVowel = true;
         break;
     }
 }
 
 if (!hasVowel) {
-    console.log("Swapping " + keyA + " and " + keyB);
     var keyTemp = keyA;
     keyA = keyB;
     keyB = keyTemp;
-    console.log("New Key: " + keyA + keyB);
 }
 
 if (bombinfo.strikes === 1) {
@@ -204,7 +194,6 @@ if (isPrime(bombinfo.serialnumber.numbers.reduce((a, b) => a + b, 0))) {
     playfairKey = playfairKey.split("").reverse().join("");
 }
 
-console.log(playfairKey, display);
 var result = playfair.decrypt(playfairKey, display.toUpperCase());
 var order = "";
 
@@ -263,5 +252,5 @@ switch (result.toUpperCase()) {
 }
 
 if (order.length > 0) {
-    ktaneSpeak("Press: " + order);
+    ktaneSpeak("Press: " + order.split("").map(a => ktaneLetterToNato(a)).join(", "));
 }

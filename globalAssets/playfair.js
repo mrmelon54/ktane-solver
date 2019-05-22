@@ -143,7 +143,7 @@ playfair.decrypt = function(key, data, handle=true) {
                 }
 
                 var foundData = matrix[pos1.y][x1] + matrix[pos2.y][x2];
-                if (foundData[1] === "X" && handle === true) {
+                if (foundData[1] === "X" && typeof(handle) === "boolean" && handle === true) {
                     foundData = foundData[0];
                 } else if (typeof(handle) == "function") {
                     foundData = handle(foundData);
@@ -170,7 +170,7 @@ playfair.decrypt = function(key, data, handle=true) {
                 }
 
                 var foundData = matrix[y1][pos1.x] + matrix[y2][pos2.x];
-                if (foundData[1] === "X" && handle === true) {
+                if (foundData[1] === "X" && typeof(handle) === "boolean" && handle === true) {
                     foundData = foundData[0];
                 } else if (typeof(handle) == "function") {
                     foundData = handle(foundData);
@@ -180,7 +180,7 @@ playfair.decrypt = function(key, data, handle=true) {
 
             case playfair.directions.none:
                 var foundData = matrix[pos1.y][pos2.x] + matrix[pos2.y][pos1.x]
-                if (foundData[1] === "X" && handle === true) {
+                if (foundData[1] === "X" && typeof(handle) === "boolean" && handle === true) {
                     foundData = foundData[0];
                 } else if (typeof(handle) === "function") {
                     foundData = handle(foundData);

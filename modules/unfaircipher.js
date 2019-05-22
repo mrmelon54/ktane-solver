@@ -2,7 +2,7 @@ var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 function stringToAlphabetPos(text) { 
     return text.toUpperCase().split("").map(a => { 
         if (!isNaN(parseInt(a))) { 
-            if (a == "0") {
+            if (a === "0") {
                 return "";
             }
             return parseInt(a); 
@@ -25,10 +25,10 @@ function alphabetPosToString(posArray, followMin, followMax) {
             result += alphabet[both - 1];
             i++; // skip next number
         } else {
-            if (number == 0) {
+            if (number === 0) {
                 result += "";
             } else {
-                if (number % 27 == 0) {
+                if (number % 27 === 0) {
                     result += "BG"; // some weird behaviour I encounted
                 } else {
                     number = (number - 1) % 27 + 1
@@ -48,7 +48,7 @@ function isPrime(number) {
 
 //console.log(alphabetPosToString([1, 5, 2, 7, 2, 5], 10, 26));
 
-if (args.length === 1 && args[0] == "") {
+if (args.length === 1 && args[0] === "") {
     args.shift();
 }
 
@@ -62,14 +62,27 @@ var solutionStep = globalStorage.get("solutionStep");
 
 var cmd = args[0].toLowerCase();
 
-if (previousSolution && (cmd == "next" || cmd == "repeat")) {
+if (previousSolution && (cmd === "next" || cmd === "repeat" || cmd === "previous")) {
     if (previousSolution.length > 0) {
-        if (cmd == "next") {
+        if (cmd === "next") {
             solutionStep++;
+            if (solutionStep >= previousSolution.length || solutionStep < 0) {
+                ktaneSpeak("End of solution, use the previous or repeat command to go back.");
+                return;
+            }
             globalStorage.set("solutionStep", solutionStep);
-            ktaneSpeak(previousSolution[solutionStep]);
+            ktaneSpeak("Step " + (solutionStep + 1) + ": " + previousSolution[solutionStep]);
             return;
-        } else {
+        } else if (cmd === "previous") {
+            solutionStep--;
+            if (solutionStep < 0) {
+                ktaneSpeak("Start of solution, use the next or repeat command to continue.");
+                return;
+            }
+            globalStorage.set("solutionStep", solutionStep);
+            ktaneSpeak("Step " + (solutionStep + 1) + ": " + previousSolution[solutionStep]);
+            return;
+        } else if (cmd === "repeat") {
             if (args.length > 1) {
                 var step = parseInt(args[1]);
                 if (!isNaN(step)) {
@@ -77,14 +90,14 @@ if (previousSolution && (cmd == "next" || cmd == "repeat")) {
                         ktaneSpeak("Invalid step.");
                         return;
                     }
-                    ktaneSpeak(previousSolution[step - 1]);
+                    ktaneSpeak("Step " + (step) + ": " + previousSolution[step - 1]);
                     return;
                 } else {
-                    ktaneSpeak(previousSolution[solutionStep]);
+                    ktaneSpeak("Step " + (solutionStep + 1) + ": " + previousSolution[solutionStep]);
                     return;
                 }
             } else {
-                ktaneSpeak(previousSolution[solutionStep]);
+                ktaneSpeak("Step " + (solutionStep + 1) + ": " + previousSolution[solutionStep]);
                 return;
             }
         }
@@ -96,7 +109,7 @@ if (previousSolution && (cmd == "next" || cmd == "repeat")) {
     return;
 }
 
-if (cmd == "next" || cmd == "repeat") {
+if (cmd === "next" || cmd === "repeat") {
     ktaneSpeak("No solution is currently saved.");
     return;
 }
@@ -197,10 +210,10 @@ bombinfo.indicators.getUnlit().forEach((isUnlit) => {
 
 caesarOffset -= bombinfo.batteries.all;
 
-if (bombinfo.batteries.all == 0) {
+if (bombinfo.batteries.all === 0) {
     caesarOffset += 10;
 }
-if (bombinfo.getPortsCount() == 0) {
+if (bombinfo.getPortsCount() === 0) {
     caesarOffset *= 2;
 }
 if (bombinfo.moduleCount.total >= 31) {
@@ -212,9 +225,20 @@ caesarOffset = -caesarOffset;
 var shiftedData = caesar.cipher(caesarOffset, data).toUpperCase();
 console.log("UNFAIR CIPHER | Caesar Result: " + shiftedData + " from " + data + " with offset " + caesarOffset);
 
-var playfair1 = playfair.decrypt(keyC, shiftedData);
+var playfair1 = playfair.decrypt(keyC, shiftedData, false);
 console.log("UNFAIR CIPHER | First Playfair Result: " + playfair1 + " from " + shiftedData + " with key " + keyC);
-var finalData = playfair.decrypt(keyA, playfair1);
+var finalData = playfair.decrypt(keyA, playfair1, (data) => {
+    var firstLetter = data[0];
+    var secondLetter = data[1];
+
+    if (firstLetter === "X") {
+        return secondLetter.repeat(2);
+    } else if (secondLetter === "X") {
+        return firstLetter.repeat(2);
+    } else {
+        return data;
+    }
+});
 
 console.log("UNFAIR CIPHER | Final Data: " + finalData + " from " + playfair1 + " with key " + keyA);
 
@@ -231,7 +255,6 @@ function addToSol(txt) {
     lastInput = txt;
 }
 
-console.log(finalSplit);
 finalSplit.forEach((command, index, array) => {
     if (inputFinished) return;
 
@@ -287,6 +310,9 @@ finalSplit.forEach((command, index, array) => {
 
         case "REP":
         case "EAT":
+            if (lastInput.includes("Red") || lastInput.includes("Green") || lastInput.includes("Blue")) {
+                colorPressCount++;
+            }
             addToSol(lastInput);
             break;
 
@@ -315,7 +341,7 @@ finalSplit.forEach((command, index, array) => {
 });
 
 if (unfairCipherSolution.length > 0) {
-    ktaneSpeak(unfairCipherSolution[0]);
+    ktaneSpeak("Step 1: " + unfairCipherSolution[0]);
 }
 
 globalStorage.set("solution", unfairCipherSolution);
