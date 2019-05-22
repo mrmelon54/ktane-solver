@@ -368,10 +368,10 @@ function KtaneBombInfo() {
             return this.indicatorList.includes(" " + t.toLowerCase());
         },
         getLit: () => {
-            return this.indicatorList.map(a => a.indexOf("*") == 0);
+            return this.indicatorList.filter(a => a.indexOf("*") == 0);
         },
         getUnlit: () => {
-            return this.indicatorList.map(a => a.indexOf(" ") == 0);
+            return this.indicatorList.filter(a => a.indexOf(" ") == 0);
         },
         getTotal: () => {
             return this.indicatorList.length;
