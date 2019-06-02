@@ -153,6 +153,13 @@
             "alias": ["caesar cipher", "caesar"],
             "help": "caesar <display>",
             "version": 1
+        },
+        {
+            "name":"Burglar Alarm",
+            "id":"burglaralarm",
+            "alias":["burglar alarm"],
+            "help":"burglar alarm <number>",
+            "version":1
         }
     ]
 }
