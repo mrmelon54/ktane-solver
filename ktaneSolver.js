@@ -60,6 +60,7 @@ function KtaneSolver() {
             } catch (e) {
                 ktaneSpeak("Invalid number of modules");
             }
+            return;
         } else if (t.indexOf("solved modules") == 0) {
             t = replaceWords(t, ["to", "for"], ["2", "4"]);
             var s = /[solved modules] ?(\d+)/.exec(t);
@@ -70,6 +71,7 @@ function KtaneSolver() {
             } catch (e) {
                 ktaneSpeak("Invalid number of modules");
             }
+            return;
         } else if (t.indexOf("needy modules") == 0) {
             t = replaceWords(t, ["to", "for"], ["2", "4"]);
             var s = /[needy modules] ?(\d+)/.exec(t);
@@ -80,6 +82,7 @@ function KtaneSolver() {
             } catch (e) {
                 ktaneSpeak("Invalid number of modules");
             }
+            return;
         } else if (t.indexOf("batteries") == 0 || t.indexOf("battery") == 0) {
             t = replaceWords(t, ["to", "for"], ["2", "4"]);
 
