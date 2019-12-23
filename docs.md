@@ -147,14 +147,19 @@ globalStorage.set( <name> , <data to save> ); // saves data item
 #### Windows
 
 1. Make sure you have Python 3.7 installed
-2. Run the `server_windows.cmd` file
+2. Run the `server.cmd` file
 3. Navigate to `http://localhost:8000/` in your browser
 4. To test a single module head on over to `http://localhost:8000/single.html?testmodule=<module id>`
-5. Running `server_windows.cmd` may just quickly flash up a window if so ask on the Discord server about adding Python to the environment variables
+5. Running `server.cmd` may just quickly flash up a window if so ask on my Discord server about adding Python to the environment variables
 
 #### Linux
 
 1. If your distribution doesn't install python 3.7 by default, install it with your preferred package manager
-2. Run `./server_linux` from a terminal
+2. Run `./server` from a terminal
 3. Navigate to `http://localhost:8000/` in your browser
 4. To test a single module head on over to `http://localhost:8000/single.html?testmodule=<module id>`
+
+#### Unknown linux version
+
+If your distribution is detected as unknown create a working script for it and add it to the main server startup script.
+If you are unsure just ask MrMelon or another contributor.

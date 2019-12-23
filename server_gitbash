@@ -1,0 +1,2 @@
+#!/bin/bash
+winpty python -m http.server 8000

@@ -1,0 +1,18 @@
+#!/bin/bash
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+if [ "${machine}" == "Linux" ] || [ "${machine}" == "Mac" ]
+then
+    ./server_linux
+elif [ "${machine}" == "MinGw" ]
+then
+    ./server_gitbash
+else
+    echo Unknown machine :: ${machine}
+fi
